@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Mall extends Model
+{
+    protected $fillable = ['party', 'input1', 'input2', 'input3', 'input4', 'input5','input6','input7'];
+
+    
+   public function orders()
+{
+    return $this->hasMany(Order::class);
+}
+
+}
