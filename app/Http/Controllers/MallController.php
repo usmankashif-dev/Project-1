@@ -34,11 +34,12 @@ class MallController extends Controller
             $query->where('input5', 'like', '%' . $request->input5 . '%');
         }
     
-        if ($request->filled('input6')) {
-            $query->where('input6', 'like', '%' . $request->input6 . '%');
-        }
      if ($request->filled('input7')) {
             $query->where('input7', 'like', '%' . $request->input7 . '%');
+        }
+
+         if ($request->filled('lot')) {
+            $query->where('lot', 'like', '%' . $request->lot . '%');
         }
     
         $malls = $query->get();
@@ -72,11 +73,12 @@ class MallController extends Controller
         if ($request->filled('input5')) {
             $query->where('input5', 'like', '%' . $request->input5 . '%');
         }
-     if ($request->filled('input6')) {
-            $query->where('input6', 'like', '%' . $request->input6 . '%');
-        }
+
      if ($request->filled('input7')) {
             $query->where('input7', 'like', '%' . $request->input7 . '%');
+        }
+        if ($request->filled('lot')) {
+            $query->where('lot', 'like', '%' . $request->lot . '%');
         }
 
         $malls = $query->get();

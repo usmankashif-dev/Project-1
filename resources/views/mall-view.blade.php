@@ -45,7 +45,7 @@
             <input type="date" name="input5" id="input5" value="{{ old('input5') }}" class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
         <div>
-            <label for="lot" class="block text-sm font-medium text-gray-700 mb-1">Lot (DateGaugeLengthWidth):</label>
+            <label for="lot" class="block text-sm font-medium text-gray-700 mb-1">Lot:</label>
             <input type="text" name="lot" id="lot" readonly class="w-full mt-2 px-4 py-2 border border-blue-400 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-sm text-blue-900 font-semibold tracking-wide">
         </div>
         <div>
@@ -99,7 +99,7 @@
                             <td class="px-4 py-2 chart">{{ $mall->input4 }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->input5 }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->input7 }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->input5 }}{{ $mall->input1 }}{{ $mall->input2 }}{{ $mall->input3 }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->lot }}</td>
                             <td class="px-4 py-2 chart">
                                 <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
                                     <form action="{{ route('mall.delete', $mall->id) }}" method="POST" class="inline-block">
