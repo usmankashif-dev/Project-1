@@ -17,9 +17,9 @@ class AddmallController extends Controller
     }
     
 
-    public function addmallform(Request $request)
+
+public function addmallform(Request $request)
 {
-   
     $validated = $request->validate([
         'party' => 'required|string',
         'input1' => 'required|numeric|min:0',
@@ -27,11 +27,11 @@ class AddmallController extends Controller
         'input3' => 'required|numeric|min:0',
         'input4' => 'required|string',
         'input5' => 'required|string',  
-        'input6' => 'required|string',
         'input7' => 'required|string',  
     ]);
 
- 
+    $lot = $request->input5 . $request->input1 . $request->input2;
+
     Mall::create([
         'party' => $request->party,
         'input1' => $request->input1,
@@ -39,11 +39,11 @@ class AddmallController extends Controller
         'input3' => $request->input3,
         'input4' => $request->input4,
         'input5' => $request->input5,
-        'input6' => $request->input6,
         'input7' => $request->input7,
+        'lot'    => $lot,
     ]);
 
-    return redirect()->route('mall-view')->with('message', 'Form submitted successfully!');
+    return redirect()->route('mall-view');
 }
 
 
@@ -69,7 +69,6 @@ class AddmallController extends Controller
             'input3' => 'required|numeric|min:0',
             'input4' => 'required|string',
             'input5' => 'required|string',
-            'input6' => 'required|string',
             'input7' => 'required|string',
 
         ]);
@@ -123,6 +122,7 @@ $lenght = $mall->input2 ?? 0;
         'gauge' => $mall->input1,
         'mall_id' => $request->mall_id,
         'dateno' => $request->dateno,
+        'lot' => $mall->lot,
     ]);
 
     return redirect()->back();

@@ -1,6 +1,10 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow mt-10">
         <form action="{{ route('Addmall.store') }}" method="POST">
+            <div class="flex justify-center">
+                <H1 class="text-xl">Create New Order</H1>
+            </div>
+            
             @csrf
 
             <div class="mb-4">

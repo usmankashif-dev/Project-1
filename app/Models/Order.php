@@ -16,6 +16,7 @@ class Order extends Model
         'widht',
         'gauge',
         'dateno',
+        'lot',
     ];
 
     public function mall()

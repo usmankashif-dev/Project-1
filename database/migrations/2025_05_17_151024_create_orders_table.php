@@ -22,6 +22,7 @@ return new class extends Migration
     $table->string('gauge');
     $table->string('widht');
     $table->string('lenght');
+    $table->string('lot');
     $table->timestamps();
 });
     }

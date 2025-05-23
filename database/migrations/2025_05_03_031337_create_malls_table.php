@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('input5');
             $table->string('input6');
             $table->string('input7');
+            $table->string('lot');
             $table->timestamps();
         });
 
