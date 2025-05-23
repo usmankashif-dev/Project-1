@@ -1,4 +1,12 @@
 <x-app-layout>
+   <div class="mb-6 p-4 bg-gray-100 border-l-4 border-blue-500 rounded shadow">
+    <h2 class="text-xl font-semibold text-blue-800 mb-2">Mall Information</h2>
+    <p><strong>Party:</strong> {{ $mall->party }}</p>
+    <p><strong>Gauge:</strong> {{ $mall->input1 }}</p>
+    <p><strong>Length:</strong> {{ $mall->input2 }}</p>
+    <p><strong>Width:</strong> {{ $mall->input3 }}</p>
+    <p><strong>Lot:</strong> {{ $mall->lot }}</p>
+</div>
     <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow mt-10">
         <form action="{{ route('Addmall.store') }}" method="POST">
             <div class="flex justify-center">
