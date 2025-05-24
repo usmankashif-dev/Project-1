@@ -16,8 +16,8 @@
             @csrf
 
             <div class="mb-4">
-                <label class="block font-semibold mb-1 text-gray-700">Machine Name</label>
-                <input type="text" name="machine" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="machine" required>
+                <label class="block font-semibold mb-1 text-gray-700">Order Gauge</label>
+                <input type="text" name="ogauge" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="ogauge" required>
             </div>
 
             <div class="mb-4">
@@ -26,13 +26,13 @@
             </div>
 
             <div class="mb-4">
-                <label class="block font-semibold mb-1 text-gray-700">Rem:</label>
-                <input type="number" name="rem" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="rem" required>
+                <label class="block font-semibold mb-1 text-gray-700">Order Lenght:</label>
+                <input type="number" name="olenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="olenght" required>
             </div>
 
             <div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Quantity</label>
-                <input type="number" name="quantity" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="quantity" required>
+                <input type="number" name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedqty" required>
             </div>
 
             <div class="mb-4">

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mall extends Model
 {
     protected $fillable = [
-        'party', 'input1', 'input2', 'input3', 'input4', 'input5', 'input7', 'lot'
+        'party', 'input1', 'input2', 'input3', 'input4', 'input5', 'input7', 'lot','newqty','availableqty'
     ];
 
     

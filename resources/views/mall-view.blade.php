@@ -53,7 +53,7 @@
             <input type="text" name="input7" id="input7" value="{{ old('input7') }}" class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
         <div class="md:col-span-2">
-            <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">Add New Order</button>
+            <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">Add New Stock</button>
         </div>
     </div>
 </form>
@@ -69,11 +69,13 @@
             <input type="text" name="input3" placeholder="Width" value="{{ request('input3') }}" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
             <input type="text" name="input4" placeholder="Material" value="{{ request('input4') }}" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
             <input type="text" name="input5" placeholder="Date" value="{{ request('input5') }}" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-            <input type="text" name="input7" placeholder="Quantity" value="{{ request('input7') }}" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
+            <input type="number" name="input7" placeholder="Quantity" value="{{ request('input7') }}" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
             <input type="text" name="lot" placeholder="Lot" value="{{ request('lot') }}" class="w-full sm:w-40 h-10 p-2 border border-blue-400 rounded-lg bg-gray-50 text-blue-900 font-semibold tracking-wide">
-            <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-bold shadow">Search</button>
+            <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-bold shadow">Search</button>      
         </form>
-        <div class="flex items-center justify-center rounded h-8"> <button id="showaddmall">Add New Stock+</button></div>
+        <div class="flex center">  <button id="showaddmall" class="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-bold shadow">Add New Stock+</button></div>
+      
+        
         <div class="overflow-x-auto">
             <table class="min-w-full table-auto border border-gray-300 shadow-md rounded-lg animate-fade-in">
                 <thead class="bg-gray-100">
@@ -98,7 +100,7 @@
                             <td class="px-4 py-2 chart">{{ $mall->input3 }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->input4 }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->input5 }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->input7 }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->availableqty }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->lot }}</td>
                             <td class="px-4 py-2 chart">
                                 <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
@@ -108,7 +110,7 @@
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition">Delete</button>
                                     </form>
                                     <a href="{{ route('mall.edit', $mall->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">Edit</a>
-                                    <a href="{{ route('order.create', $mall->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">Order</a>
+                                    <a href="{{ route('order.create', $mall->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">C Order</a>
                                 </div>
                             </td>
                         </tr>

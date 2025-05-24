@@ -41,4 +41,5 @@ Route::post('/orders', [AddmallController::class, 'store'])->name('Addmall.store
 Route::get('/orders/{id}', [AddmallController::class, 'newordersv'])->name('order.create');
 Route::get('/order-view', [OrderController::class, 'vieworder'])->name('order-view');
 Route::get('/order', [AddmallController::class, 'showOrders'])->name('order-view');
+Route::delete('/order/{id}', [AddmallController::class, 'deleteOrder'])->name('order.delete');
 require __DIR__.'/auth.php';

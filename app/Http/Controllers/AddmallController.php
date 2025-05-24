@@ -40,7 +40,9 @@ public function addmallform(Request $request)
         'input4' => $request->input4,
         'input5' => $request->input5,
         'input7' => $request->input7,
+        'availableqty' => $request->input7, 
         'lot'    => $lot,
+
     ]);
 
     return redirect()->route('mall-view');
@@ -75,6 +77,8 @@ public function addmallform(Request $request)
         
         $mall = Mall::findOrFail($id);
         $mall->update($validated);
+$mall->availableqty = $request->input7;
+$mall->save();
 
         return redirect()->route('mall-view');
     }
@@ -105,17 +109,18 @@ public function store(Request $request)
 
     $mall = Mall::find($request->mall_id);
 
-if (!$mall) {
-    return redirect()->back()->with('error', 'Mall not found!');
+ if (!$mall) {
+   return redirect()->back()->with('error', 'Mall not found!');
 }
+
 $widht = $mall->input3 ?? 0;
 $lenght = $mall->input2 ?? 0;
 
 
-    $order = Order::create([
-        'quantity' => $request->quantity,
-        'rem' => $request->rem,
-        'machine' => $request->machine,
+     $order = Order::create([
+       'orderedqty' => $request->orderedqty,
+        'olenght' => $request->olenght,
+        'ogauge' => $request->ogauge,
         'peice' => $request->peice,
         'lenght' => $lenght,
         'widht' => $widht,
@@ -123,10 +128,23 @@ $lenght = $mall->input2 ?? 0;
         'mall_id' => $request->mall_id,
         'dateno' => $request->dateno,
         'lot' => $mall->lot,
+        'rem' => $mall->availableqty,
     ]);
+     if ($mall->availableqty < $request->orderedqty) {
+   return redirect()->back()->with('Not Enough Stock Available');
+}
 
+$mall->availableqty -= $request->orderedqty;
+    $mall->save();
     return redirect()->back();
 }
+ public function deleteOrder($id)
+    {
+        $order = Order::findOrFail($id);
+        $order->delete();
+        return redirect()->back()->with('message', 'Mall deleted successfully.');
+    }
+
 public function newOrder()
 {
     return view('new-order');

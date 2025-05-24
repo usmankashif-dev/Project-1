@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
     $table->id();
     $table->foreignId('mall_id')->constrained('malls')->onDelete('cascade');
-    $table->string('quantity');
-    $table->string('rem');
+    $table->string('orderedqty');
+    $table->string('olenght');
     $table->string('peice');
-    $table->string('machine');
+    $table->string('ogauge');
     $table->string('dateno');
     $table->string('gauge');
     $table->string('widht');
     $table->string('lenght');
     $table->string('lot');
+    $table->string('rem');
     $table->timestamps();
 });
     }

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('input6');
             $table->string('input7');
             $table->string('lot');
+            $table->string('newqty');
+            $table->string('availabeqty');
             $table->timestamps();
         });
 

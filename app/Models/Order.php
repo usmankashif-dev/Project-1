@@ -8,15 +8,16 @@ class Order extends Model
 {
     protected $fillable = [
         'mall_id',
-        'quantity',
-        'rem',
-        'machine',
+        'orderedqty',
+        'olenght',
+        'ogauge',
         'peice',
         'lenght',
         'widht',
         'gauge',
         'dateno',
         'lot',
+        'rem',
     ];
 
     public function mall()
