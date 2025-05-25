@@ -7,6 +7,7 @@ use App\Models\Mall;
 use App\Models\Dropdown;
 use App\Models\Party; 
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 class AddmallController extends Controller
 {
@@ -105,20 +106,41 @@ $mall->save();
 
 public function store(Request $request)
 {
+    // Add validation for all required fields
+    $validated = $request->validate([
+        'orderedqty' => 'required|numeric|min:1',
+        'olenght' => 'required|numeric|min:1',
+        'ogauge' => 'required',
+        'peice' => 'required',
+        'bundlewidht' => 'required',
+        'sheetperbundle' => 'required|numeric|min:1',
+        'jalilenght' => 'required',
+        'mall_id' => 'required|exists:malls,id',
+        'dateno' => 'required|date',
+    ]);
+
     $mall_id = $request->mall_id;
+    $mall = Mall::find($mall_id);
 
-    $mall = Mall::find($request->mall_id);
+    if (!$mall) {
+        return redirect()->back()->with('error', 'Mall not found!');
+    }
 
- if (!$mall) {
-   return redirect()->back()->with('error', 'Mall not found!');
-}
+    $widht = $mall->input3 ?? 0;
+    $lenght = $mall->input2 ?? 0;
 
-$widht = $mall->input3 ?? 0;
-$lenght = $mall->input2 ?? 0;
+    // Check if enough stock is available
+    if ($mall->availableqty < $request->orderedqty) {
+        return redirect()->back()->with('Not Enough Stock Available');
+    }
 
-
-     $order = Order::create([
-       'orderedqty' => $request->orderedqty,
+    // Place the order
+    $cutsheetqty = 0;
+    if ($lenght != 0) {
+        $cutsheetqty = ($request->olenght / $lenght) * $request->orderedqty;
+    }
+    $order = Order::create([
+        'orderedqty' => $request->orderedqty,
         'olenght' => $request->olenght,
         'ogauge' => $request->ogauge,
         'peice' => $request->peice,
@@ -129,20 +151,52 @@ $lenght = $mall->input2 ?? 0;
         'dateno' => $request->dateno,
         'lot' => $mall->lot,
         'rem' => $mall->availableqty,
+        'orgsheet' => $mall->input2 . '-' . $mall->input3 . '-' . $mall->input1,
+        'cutsheet' => $request->olenght . '-' . $mall->input3 . '-' . $mall->input1,
+        'bundlewidht' => $request->bundlewidht,
+        'sheetperbundle' => $request->sheetperbundle,
+        'partyorder' => $mall->party,
+        'cutsheetqty' => $cutsheetqty,
+        'jalilenght' => $request->jalilenght,
     ]);
-     if ($mall->availableqty < $request->orderedqty) {
-   return redirect()->back()->with('Not Enough Stock Available');
+    Log::info('Order created', ['order_id' => $order->id]);
+
+    // If ordered length is less than mall's length, create a new mall with the remaining length and ordered quantity
+    if ($request->olenght < $mall->input2) {
+        $remainingLength = $mall->input2 - $request->olenght;
+
+        // Duplicate the mall with the remaining length and ordered quantity
+        $newMall = $mall->replicate();
+        $newMall->input2 = $remainingLength;
+        $newMall->availableqty = $request->orderedqty;
+        $newMall->save();
+
+        // The original mall keeps its length, but availableqty is reduced by orderedqty
+        $mall->availableqty -= $request->orderedqty;
+
+        // Delete the new mall if its quantity is zero
+        if ($newMall->availableqty == 0) {
+            $newMall->delete();
+        }
+    } else {
+        // If no split, just reduce availableqty as usual
+        $mall->availableqty -= $request->orderedqty;
+    }
+
+    // Delete the original mall if its quantity is zero
+    if ($mall->availableqty == 0) {
+        $mall->delete();
+    } else {
+        $mall->save();
+    }
+    return redirect()->route('order-view')->with('success', 'Order placed successfully!');
 }
 
-$mall->availableqty -= $request->orderedqty;
-    $mall->save();
-    return redirect()->back();
-}
  public function deleteOrder($id)
     {
         $order = Order::findOrFail($id);
         $order->delete();
-        return redirect()->back()->with('message', 'Mall deleted successfully.');
+        return redirect()->back()->with('message', 'Order deleted successfully.');
     }
 
 public function newOrder()

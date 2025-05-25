@@ -18,6 +18,13 @@ class Order extends Model
         'dateno',
         'lot',
         'rem',
+        'orgsheet',
+        'cutsheet',
+        'bundlewidht',
+        'sheetperbundle',
+        'partyorder',
+        'cutsheetqty',
+        'jalilenght',
     ];
 
     public function mall()

@@ -80,28 +80,28 @@
             <table class="min-w-full table-auto border border-gray-300 shadow-md rounded-lg animate-fade-in">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="px-4 py-2 text-left chart">Party</th>
-                        <th class="px-4 py-2 text-left chart">Gauge</th>
-                        <th class="px-4 py-2 text-left chart">Length</th>
-                        <th class="px-4 py-2 text-left chart">Width</th>
-                        <th class="px-4 py-2 text-left chart">Material</th>
                         <th class="px-4 py-2 text-left chart">Date</th>
-                        <th class="px-4 py-2 text-left chart">Quantity</th>
+                        <th class="px-4 py-2 text-left chart">Party</th>
+                        <th class="px-4 py-2 text-left chart">Widht</th>
+                        <th class="px-4 py-2 text-left chart">Lenght</th>
+                        <th class="px-4 py-2 text-left chart">Gauge</th>
                         <th class="px-4 py-2 text-left chart">Lot</th>
+                        <th class="px-4 py-2 text-left chart">Material</th>
+                        <th class="px-4 py-2 text-left chart">Quantity</th>
                         <th class="px-4 py-2 text-left chart textr">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($malls as $mall)
                         <tr class="hover:bg-gray-50 transition">
-                            <td class="px-4 py-2 chart">{{ $mall->party }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->input1 }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->input2 }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->input3 }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->input4 }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->input5 }}</td>
-                            <td class="px-4 py-2 chart">{{ $mall->availableqty }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->party }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->input3 }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->input2 }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->input1 }}</td>
                             <td class="px-4 py-2 chart">{{ $mall->lot }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->input4 }}</td>
+                            <td class="px-4 py-2 chart">{{ $mall->availableqty }}</td>
                             <td class="px-4 py-2 chart">
                                 <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
                                     <form action="{{ route('mall.delete', $mall->id) }}" method="POST" class="inline-block">

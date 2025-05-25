@@ -24,6 +24,13 @@ return new class extends Migration
     $table->string('lenght');
     $table->string('lot');
     $table->string('rem');
+    $table->string('orgsheet');
+    $table->string('cutsheet');
+    $table->string('bundlewidht');
+    $table->string('sheetperbundle');
+    $table->string('partyorder');
+    $table->string('cutsheetqty');
+    $table->string('jalilenght');
     $table->timestamps();
 });
     }

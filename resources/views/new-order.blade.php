@@ -22,7 +22,7 @@
 
             <div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Piece</label>
-                <input type="number" name="peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="peice" required>
+                <input type="text" name="peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="peice" required>
             </div>
 
             <div class="mb-4">
@@ -38,6 +38,21 @@
             <div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Date:</label>
                 <input type="date" name="dateno" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="dateno" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1 text-gray-700">Widht:</label>
+                <input type="number" name="bundlewidht" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="bundlewidht" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1 text-gray-700">Sheets Per Bundle:</label>
+                <input type="number" name="sheetperbundle" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="sheetperbundle" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1 text-gray-700">Jali Lenght:</label>
+                <input type="number" name="jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="jalilenght" required>
             </div>
 
             <input type="hidden" name="mall_id" value="{{ $mall->id }}">
