@@ -29,8 +29,8 @@ Route::delete('/mall/{id}', [AddmallController::class, 'deleteMall'])->name('mal
 Route::get('/mall/edit/{id}', [AddmallController::class, 'editMall'])->name('mall.edit');
 Route::post('/mall/update/{id}', [AddmallController::class, 'updateMall'])->name('mall.update');
 
-Route::get('/form', [YourController::class, 'showForm']);
-Route::post('/store-city', [YourController::class, 'storeCity'])->name('store.city');
+
+
 Route::post('/store-party', [PartyController::class, 'store'])->name('store.party');
 
 
@@ -39,7 +39,11 @@ Route::get('/new-order', [AddmallController::class, 'newOrder']);
 
 Route::post('/orders', [AddmallController::class, 'store'])->name('Addmall.store');
 Route::get('/orders/{id}', [AddmallController::class, 'newordersv'])->name('order.create');
-Route::get('/order-view', [OrderController::class, 'vieworder'])->name('order-view');
+
 Route::get('/order', [AddmallController::class, 'showOrders'])->name('order-view');
 Route::delete('/order/{id}', [AddmallController::class, 'deleteOrder'])->name('order.delete');
+Route::get('/orders', [AddmallController::class, 'makestore'])->name('makeorder.store');
+Route::post('/orders/{id}', [AddmallController::class, 'makenewordersv'])->name('order.make');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
 require __DIR__.'/auth.php';

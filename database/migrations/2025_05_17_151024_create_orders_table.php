@@ -31,6 +31,7 @@ return new class extends Migration
     $table->string('partyorder');
     $table->string('cutsheetqty');
     $table->string('jalilenght');
+    $table->string('orderedpeices');
     $table->timestamps();
 });
     }

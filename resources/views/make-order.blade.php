@@ -9,9 +9,9 @@
     <p><strong>Quantity:</strong> {{ $mall->availableqty }}</p>
 </div>
     <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow mt-10">
-        <form action="{{ route('Addmall.store') }}" method="POST">
+        <form action="{{ route('makeorder.store') }}" method="GET">
             <div class="flex justify-center">
-                <H1 class="text-xl">Create New Order</H1>
+                <H1 class="text-xl">Make New Order</H1>
             </div>
             
             @csrf
@@ -26,9 +26,14 @@
                 <input type="text" name="peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="peice" required>
             </div>
 
-            <div class="mb-4">
+<div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Lenght:</label>
                 <input type="number" name="olenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="olenght" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1 text-gray-700">Peices Of One Sheet:</label>
+                <input type="number" name="orderedpeices" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedpeices" required>
             </div>
 
             <div class="mb-4">
@@ -55,6 +60,7 @@
                 <label class="block font-semibold mb-1 text-gray-700">Jali Lenght:</label>
                 <input type="number" name="jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="jalilenght" required>
             </div>
+
 
             <input type="hidden" name="mall_id" value="{{ $mall->id }}">
 

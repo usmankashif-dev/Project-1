@@ -25,6 +25,7 @@ class Order extends Model
         'partyorder',
         'cutsheetqty',
         'jalilenght',
+        'orderedpeices',
     ];
 
     public function mall()

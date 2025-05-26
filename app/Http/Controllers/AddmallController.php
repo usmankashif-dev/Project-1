@@ -103,6 +103,11 @@ $mall->save();
         $mall = Mall::findOrFail($id);
         return view('new-order', compact('mall'));
     }
+     public function makenewordersv($id)
+    {
+        $mall = Mall::findOrFail($id);
+        return view('make-order', compact('mall'));
+    }
 
 public function store(Request $request)
 {
@@ -120,6 +125,7 @@ public function store(Request $request)
     ]);
 
     $mall_id = $request->mall_id;
+    // Always fetch the latest mall data
     $mall = Mall::find($mall_id);
 
     if (!$mall) {
@@ -135,9 +141,11 @@ public function store(Request $request)
     }
 
     // Place the order
+    $orderedpeices = 0;
+
     $cutsheetqty = 0;
     if ($lenght != 0) {
-        $cutsheetqty = ($request->olenght / $lenght) * $request->orderedqty;
+        $cutsheetqty = ($lenght / $request->olenght) * $request->orderedqty;
     }
     $order = Order::create([
         'orderedqty' => $request->orderedqty,
@@ -150,7 +158,7 @@ public function store(Request $request)
         'mall_id' => $request->mall_id,
         'dateno' => $request->dateno,
         'lot' => $mall->lot,
-        'rem' => $mall->availableqty,
+        'rem' => $mall->availableqty, // Always use the latest availableqty
         'orgsheet' => $mall->input2 . '-' . $mall->input3 . '-' . $mall->input1,
         'cutsheet' => $request->olenght . '-' . $mall->input3 . '-' . $mall->input1,
         'bundlewidht' => $request->bundlewidht,
@@ -158,6 +166,7 @@ public function store(Request $request)
         'partyorder' => $mall->party,
         'cutsheetqty' => $cutsheetqty,
         'jalilenght' => $request->jalilenght,
+        'orderedpeices' => $orderedpeices,
     ]);
     Log::info('Order created', ['order_id' => $order->id]);
 
@@ -191,7 +200,94 @@ public function store(Request $request)
     }
     return redirect()->route('order-view')->with('success', 'Order placed successfully!');
 }
+public function makestore(Request $request)
+{
+    // Add validation for all required fields
+    $validated = $request->validate([
+        'orderedqty' => 'required|numeric|min:1',
+        'olenght' => 'required|numeric|min:1',
+        'ogauge' => 'required',
+        'peice' => 'required',
+        'bundlewidht' => 'required',
+        'sheetperbundle' => 'required|numeric|min:1',
+        'jalilenght' => 'required',
+        'mall_id' => 'required|exists:malls,id',
+        'dateno' => 'required|date',
+    ]);
 
+    $mall_id = $request->mall_id;
+    // Always fetch the latest mall data
+    $mall = Mall::find($mall_id);
+
+    if (!$mall) {
+        return redirect()->back()->with('error', 'Mall not found!');
+    }
+
+    $widht = $mall->input3 ?? 0;
+    $lenght = $mall->input2 ?? 0;
+
+    // Check if enough stock is available
+    if ($mall->availableqty < $request->orderedqty) {
+        return redirect()->back()->with('Not Enough Stock Available');
+    }
+
+    // Place the order
+    $orderedpeices = $request->orderedpeices * $request->orderedqty;
+
+    $cutsheetqty = 0;
+    $order = Order::create([
+        'orderedqty' => $request->orderedqty,
+        'olenght' => $request->olenght,
+        'ogauge' => $request->ogauge,
+        'peice' => $request->peice,
+        'lenght' => $lenght,
+        'widht' => $widht,
+        'gauge' => $mall->input1,
+        'mall_id' => $request->mall_id,
+        'dateno' => $request->dateno,
+        'lot' => $mall->lot,
+        'rem' => $mall->availableqty, // Always use the latest availableqty
+        'orgsheet' => $mall->input2 . '-' . $mall->input3 . '-' . $mall->input1,
+        'cutsheet' => $request->olenght . '-' . $mall->input3 . '-' . $mall->input1,
+        'bundlewidht' => $request->bundlewidht,
+        'sheetperbundle' => $request->sheetperbundle,
+        'partyorder' => $mall->party,
+        'cutsheetqty' => $orderedpeices,
+        'jalilenght' => $request->jalilenght,
+        'orderedpeices' => $orderedpeices,
+    ]);
+    Log::info('Order created', ['order_id' => $order->id]);
+
+    // If ordered length is less than mall's length, create a new mall with the remaining length and ordered quantity
+    if ($request->olenght < $mall->input2) {
+        $remainingLength = $mall->input2 - $request->olenght;
+
+        // Duplicate the mall with the remaining length and ordered quantity
+        $newMall = $mall->replicate();
+        $newMall->input2 = $remainingLength;
+        $newMall->availableqty = $request->orderedqty;
+        $newMall->save();
+
+        // The original mall keeps its length, but availableqty is reduced by orderedqty
+        $mall->availableqty -= $request->orderedqty;
+
+        // Delete the new mall if its quantity is zero
+        if ($newMall->availableqty == 0) {
+            $newMall->delete();
+        }
+    } else {
+        // If no split, just reduce availableqty as usual
+        $mall->availableqty -= $request->orderedqty;
+    }
+
+    // Delete the original mall if its quantity is zero
+    if ($mall->availableqty == 0) {
+        $mall->delete();
+    } else {
+        $mall->save();
+    }
+    return redirect()->route('order-view')->with('success', 'Order placed successfully!');
+}
  public function deleteOrder($id)
     {
         $order = Order::findOrFail($id);
@@ -207,6 +303,12 @@ public function newOrder()
 public function showOrders()
 {
     $orders = Order::with('mall')->latest()->get(); 
+    // Update each order's rem to the latest availableqty from the related mall
+    foreach ($orders as $order) {
+        if ($order->mall) {
+            $order->rem = $order->mall->availableqty;
+        }
+    }
     return view('order-view', compact('orders'));
 }
 

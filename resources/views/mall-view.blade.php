@@ -111,6 +111,11 @@
                                     </form>
                                     <a href="{{ route('mall.edit', $mall->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">Edit</a>
                                     <a href="{{ route('order.create', $mall->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">C Order</a>
+<form action="{{ route('order.make', $mall->id) }}" method="POST">
+    @csrf
+    <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">Make Order</button>
+</form>
+
                                 </div>
                             </td>
                         </tr>
