@@ -37,13 +37,17 @@ Route::post('/store-party', [PartyController::class, 'store'])->name('store.part
 Route::get('/new-order', [AddmallController::class, 'newOrder']);
 
 
-Route::post('/orders', [AddmallController::class, 'store'])->name('Addmall.store');
+Route::post('/order', [AddmallController::class, 'store'])->name('Addmall.store');
 Route::get('/orders/{id}', [AddmallController::class, 'newordersv'])->name('order.create');
 
 Route::get('/order', [AddmallController::class, 'showOrders'])->name('order-view');
 Route::delete('/order/{id}', [AddmallController::class, 'deleteOrder'])->name('order.delete');
+
 Route::get('/orders', [AddmallController::class, 'makestore'])->name('makeorder.store');
+Route::post('/orders', [AddmallController::class, 'makestore'])->name('makeorder.store');
 Route::post('/orders/{id}', [AddmallController::class, 'makenewordersv'])->name('order.make');
-Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders-list', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/ordere/edit/{id}', [AddmallController::class, 'editorder'])->name('order.edit');
+Route::post('/orderu/update/{id}', [AddmallController::class, 'updateorder'])->name('order.update');
 
 require __DIR__.'/auth.php';

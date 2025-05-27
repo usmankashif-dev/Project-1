@@ -1,17 +1,9 @@
 <x-app-layout>
-   <div class="mb-6 p-4 bg-gray-100 border-l-4 border-blue-500 rounded shadow">
-    <h2 class="text-xl font-semibold text-blue-800 mb-2">Mall Information</h2>
-    <p><strong>Party:</strong> {{ $mall->party }}</p>
-    <p><strong>Gauge:</strong> {{ $mall->input1 }}</p>
-    <p><strong>Length:</strong> {{ $mall->input2 }}</p>
-    <p><strong>Width:</strong> {{ $mall->input3 }}</p>
-    <p><strong>Lot:</strong> {{ $mall->lot }}</p>
-    <p><strong>Quantity:</strong> {{ $mall->availableqty }}</p>
-</div>
+  
     <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow mt-10">
-        <form action="{{ route('makeorder.store') }}" method="GET">
+        <form action="{{ route('order.update', $order->id) }}" method="POST">
             <div class="flex justify-center">
-                <H1 class="text-xl">Make New Order</H1>
+                <H1 class="text-xl">Edit Order</H1>
             </div>
             
             @csrf
@@ -27,8 +19,13 @@
             </div>
 
             <div class="mb-4">
-                <label class="block font-semibold mb-1 text-gray-700">Peices Of One Sheet:</label>
-                <input type="number" name="orderedpeices" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedpeices" required>
+                <label class="block font-semibold mb-1 text-gray-700">Lenght:</label>
+                <input type="number" name="olenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="olenght" required>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-semibold mb-1 text-gray-700">Quantity</label>
+                <input type="number" name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedqty" required>
             </div>
 
             <div class="mb-4">
@@ -51,8 +48,7 @@
                 <input type="number" name="jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="jalilenght" required>
             </div>
 
-
-            <input type="hidden" name="mall_id" value="{{ $mall->id }}">
+            <input type="hidden" name="mall_id" value="{{ $order->id }}">
 
 
 

@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('orders', function (Blueprint $table) {
+Schema::create('orders', function (Blueprint $table) {
     $table->id();
-    $table->foreignId('mall_id')->constrained('malls')->onDelete('cascade');
+    $table->foreignId('mall_id')->nullable()->constrained('malls')->onDelete('set null');
     $table->string('orderedqty');
     $table->string('olenght');
     $table->string('peice');
@@ -34,6 +34,7 @@ return new class extends Migration
     $table->string('orderedpeices');
     $table->timestamps();
 });
+
     }
 
     /**

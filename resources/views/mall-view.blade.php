@@ -113,8 +113,9 @@
                                     <a href="{{ route('order.create', $mall->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">C Order</a>
 <form action="{{ route('order.make', $mall->id) }}" method="POST">
     @csrf
-    <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">Make Order</button>
+    <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">M Order</button>
 </form>
+
 
                                 </div>
                             </td>
@@ -128,13 +129,13 @@
 <script src="{{ asset('build/assets/script.js') }}"></script>
 <script>
 function updateLot() {
+    const length = document.getElementById('input2').value;
     const date = document.getElementById('input5').value;
     const gauge = document.getElementById('input1').value;
-    const length = document.getElementById('input2').value;
-    const width = document.getElementById('input3').value;
-    document.getElementById('lot').value = `${date}${gauge}${length}${width}`;
+    const qty = document.getElementById('input7').value;
+    document.getElementById('lot').value = `${length}-${date}-${gauge}-${qty}`;
 }
-['input1','input2','input3','input5'].forEach(id => {
+['input2','input1','input5','input7'].forEach(id => {
     document.getElementById(id).addEventListener('input', updateLot);
 });
 </script>
