@@ -150,7 +150,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition">Delete</button>
                                     </form>
-                            <button type="submit" class="bg-blue-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition">To M</button>
+                            <a href="{{ route('order.toMachine', $order->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition">To M</a>
                             <a href="{{ route('order.edit', $order->id) }}" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition">Edit</a>
                             </td>
                         </tr>

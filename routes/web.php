@@ -5,6 +5,7 @@ use App\Http\Controllers\AddmallController;
 use App\Http\Controllers\MallController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\MachineController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -49,5 +50,10 @@ Route::post('/orders/{id}', [AddmallController::class, 'makenewordersv'])->name(
 Route::get('/orders-list', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/ordere/edit/{id}', [AddmallController::class, 'editorder'])->name('order.edit');
 Route::post('/orderu/update/{id}', [AddmallController::class, 'updateorder'])->name('order.update');
+
+Route::get('/order/{id}/to-machine', [MachineController::class, 'create'])->name('order.toMachine');
+Route::post('/order/{id}/to-machine', [MachineController::class, 'store'])->name('order.sendToMachine');
+Route::get('/machine-view', [MachineController::class, 'index'])->name('machine-view');
+Route::delete('/machine/{id}', [MachineController::class, 'destroy'])->name('machine.delete');
 
 require __DIR__.'/auth.php';

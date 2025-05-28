@@ -14,6 +14,19 @@ return new class extends Migration
         Schema::create('machine', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('machineqty');
+            $table->string('machinedate');
+            $table->integer('machinenumber');
+            $table->integer('olenght')->nullable();
+            $table->string('peice')->nullable();
+            $table->integer('ogauge')->nullable();
+            $table->string('cutsheet')->nullable();
+            $table->string('lot')->nullable();
+            $table->integer('bundlewidht')->nullable();
+            $table->integer('sheetperbundle')->nullable();
+            $table->string('partyorder')->nullable();
+            $table->integer('jalilenght')->nullable();
+            $table->integer('orderedpeices')->nullable();
         });
     }
 
