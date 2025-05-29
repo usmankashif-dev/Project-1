@@ -26,7 +26,6 @@ class MachineController extends Controller
         $machine->machinedate = $validated['machinedate'];
         $machine->machinenumber = $validated['machinenumber'];
         $machine->machineqty = $validated['machineqty'];
-        // Copy order info to machine
         $machine->olenght = $order->olenght;
         $machine->peice = $order->peice;
         $machine->ogauge = $order->ogauge;
@@ -56,11 +55,10 @@ class MachineController extends Controller
         $machines = Machine::all();
         return view('machine-view', compact('machines'));
     }
-
     public function destroy($id)
     {
         $machine = Machine::findOrFail($id);
-        $machine->delete();
-        return redirect()->route('machine-view')->with('success', 'Machine entry deleted successfully!');
+         $machine->delete();
+        return redirect()->back()->with('message', 'Order deleted successfully.');
     }
 }

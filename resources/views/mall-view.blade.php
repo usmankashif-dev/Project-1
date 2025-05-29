@@ -1,6 +1,7 @@
-<header>
+<head>
     <link rel="stylesheet" href="{{ asset('build/assets/view-mall.css') }}">
-</header>
+    <script src="{{ asset('resources/js/search-toggle.js') }}" defer></script>
+</head>
 
 <x-app-layout>
     <x-slot name="header">
@@ -127,6 +128,7 @@
     </div>
 </x-app-layout>
 <script src="{{ asset('build/assets/script.js') }}"></script>
+<script src="{{ asset('resources/js/search-toggle.js') }}" defer></script>
 <script>
 function updateLot() {
     const length = document.getElementById('input2').value;
@@ -139,3 +141,31 @@ function updateLot() {
     document.getElementById(id).addEventListener('input', updateLot);
 });
 </script>
+<button id="mallSearchToggleBtn" class="search-toggle-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" data-target="mallSearchForm">Search</button>
+<form method="GET" action="{{ route('mall-view') }}" class="space-y-4 mb-6 hidden" id="mallSearchForm">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+            <label for="party" class="block text-sm font-medium text-gray-700">Party</label>
+            <input type="text" name="party" id="party" value="{{ request('party') }}" class="border rounded px-2 py-1 w-full" />
+        </div>
+        <div>
+            <label for="input1" class="block text-sm font-medium text-gray-700">Gauge of sheet</label>
+            <input type="number" step="0.01" name="input1" id="input1" value="{{ request('input1') }}" class="border rounded px-2 py-1 w-full" />
+        </div>
+        <div>
+            <label for="input2" class="block text-sm font-medium text-gray-700">Length of sheet</label>
+            <input type="number" step="0.01" name="input2" id="input2" value="{{ request('input2') }}" class="border rounded px-2 py-1 w-full" />
+        </div>
+        <div>
+            <label for="input3" class="block text-sm font-medium text-gray-700">Width of sheet</label>
+            <input type="number" step="0.01" name="input3" id="input3" value="{{ request('input3') }}" class="border rounded px-2 py-1 w-full" />
+        </div>
+        <div>
+            <label for="input4" class="block text-sm font-medium text-gray-700">Material of sheet</label>
+            <input type="text" name="input4" id="input4" value="{{ request('input4') }}" class="border rounded px-2 py-1 w-full" />
+        </div>
+    </div>
+    <div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search</button>
+    </div>
+</form>

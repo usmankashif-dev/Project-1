@@ -147,6 +147,7 @@ public function store(Request $request)
     if ($lenght != 0) {
         $cutsheetqty = ($lenght / $request->olenght) * $request->orderedqty;
     }
+    $rem = $cutsheetqty;
     $order = Order::create([
         'orderedqty' => $request->orderedqty,
         'olenght' => $request->olenght,
@@ -158,7 +159,7 @@ public function store(Request $request)
         'mall_id' => $request->mall_id,
         'dateno' => $request->dateno,
         'lot' => $mall->lot,
-        'rem' => $mall->availableqty, // Always use the latest availableqty
+        'rem' => $cutsheetqty, 
         'orgsheet' => $mall->input2 . '-' . $mall->input3 . '-' . $mall->input1,
         'cutsheet' => $request->olenght . '-' . $mall->input3 . '-' . $mall->input1,
         'bundlewidht' => $request->bundlewidht,
@@ -232,7 +233,6 @@ public function makestore(Request $request)
     
         $cutsheetqty = $orderedqty * $orderedpeices;
     $olenght = $mall->input2 / $orderedpeices;
-$rem = $orderedqty;
 
     $order = Order::create([
         'orderedqty' => $orderedqty,
@@ -245,7 +245,7 @@ $rem = $orderedqty;
         'mall_id' => $mall_id,
         'dateno' => $request->dateno,
         'lot' => $mall->lot,
-        'rem' => $rem,
+        'rem' => $cutsheetqty,
         'orgsheet' => $mall->input2 . '-' . $mall->input3 . '-' . $mall->input1,
         'cutsheet' => $olenght . '-' . $mall->input3 . '-' . $mall->input1,
         'bundlewidht' => $request->bundlewidht,
@@ -256,9 +256,9 @@ $rem = $orderedqty;
         'orderedpeices' => $orderedpeices,
     ]);
     Log::info('Order created', ['order_id' => $order->id]);
-
-    // Do NOT delete the mall here, and do NOT delete the order.
-    // Just leave both records as they are.
+    $mall_id = $request->mall_id;
+    $mall = Mall::find($mall_id);
+    $mall->delete();
 
     return redirect()->route('order-view')->with('success', 'Order placed successfully!');
 }
