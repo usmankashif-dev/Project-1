@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mall;
+use App\Models\Party;
 
 class MallController extends Controller
 {
@@ -37,14 +38,13 @@ class MallController extends Controller
      if ($request->filled('input7')) {
             $query->where('input7', 'like', '%' . $request->input7 . '%');
         }
-
-         if ($request->filled('lot')) {
+        if ($request->filled('lot')) {
             $query->where('lot', 'like', '%' . $request->lot . '%');
         }
     
         $malls = $query->get();
-    
-        return view('mall-view', compact('malls'));
+        $parties = Party::all();
+        return view('mall-view', compact('malls', 'parties'));
     }
     public function indexd(Request $request)
     {

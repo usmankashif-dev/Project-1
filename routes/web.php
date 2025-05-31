@@ -55,5 +55,13 @@ Route::get('/order/{id}/to-machine', [MachineController::class, 'create'])->name
 Route::post('/order/{id}/to-machine', [MachineController::class, 'store'])->name('order.sendToMachine');
 Route::get('/machine-view', [MachineController::class, 'index'])->name('machine-view');
 Route::delete('/machine/{id}', [MachineController::class, 'destroy'])->name('machine.delete');
+Route::get('/machine/{id}/edit', [MachineController::class, 'edit'])->name('machine.edit');
+Route::put('/machine/{id}', [MachineController::class, 'update'])->name('machine.update');
+Route::get('/machine/{id}/finish', [MachineController::class, 'finishForm'])->name('machine.finishForm');
+Route::post('/machine/{id}/finish', [MachineController::class, 'finish'])->name('machine.finish');
+Route::get('/stock', [MachineController::class, 'stock'])->name('stock');
+Route::delete('/stock/{id}', [MachineController::class, 'stockDelete'])->name('stock.delete');
+Route::get('/stock/{id}/edit', [MachineController::class, 'stockEdit'])->name('stock.edit');
+Route::put('/stock/{id}', [MachineController::class, 'stockUpdate'])->name('stock.update');
 
 require __DIR__.'/auth.php';

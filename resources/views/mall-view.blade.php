@@ -16,8 +16,9 @@
             <label for="party" class="block text-sm font-medium text-gray-700">Select Party:</label>
             <select name="party" id="party" class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
                 <option value="">--Select Party--</option>
-                <option value="Amjad">Amjad</option>
-                <option value="Usman">Usman</option>
+                @foreach($parties as $party)
+                    <option value="{{ $party->name }}">{{ $party->name }}</option>
+                @endforeach
                 <option value="add_new">+ Add New Party</option>
             </select>
         </div>
@@ -128,7 +129,6 @@
     </div>
 </x-app-layout>
 <script src="{{ asset('build/assets/script.js') }}"></script>
-<script src="{{ asset('resources/js/search-toggle.js') }}" defer></script>
 <script>
 function updateLot() {
     const length = document.getElementById('input2').value;
