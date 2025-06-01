@@ -189,4 +189,72 @@ class MachineController extends Controller
         \DB::table('finished_stocks')->where('id', $id)->update($validated);
         return redirect()->route('stock')->with('success', 'Stock entry updated successfully!');
     }
+    public function bundleForm($id)
+    {
+        $stock = DB::table('finished_stocks')->where('id', $id)->first();
+        return view('stock-bundle-form', compact('stock'));
+    }
+
+    public function bundleStore(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'bundle_date' => 'required|date',
+            'sheets_per_bundle' => 'required|integer|min:1',
+            'bundle_count' => 'required|integer|min:1',
+        ]);
+        $stock = DB::table('finished_stocks')->where('id', $id)->first();
+        if (!$stock) {
+            return redirect()->route('stock')->with('error', 'Stock not found!');
+        }
+        $totalSheets = $validated['sheets_per_bundle'] * $validated['bundle_count'];
+        if ($totalSheets > $stock->bundle) {
+            return back()->withErrors(['bundle_count' => 'Not enough finished quantity.']);
+        }
+        // Subtract from finished stock
+        DB::table('finished_stocks')->where('id', $id)->update([
+            'bundle' => $stock->bundle - $totalSheets
+        ]);
+        // Insert into bundle_history so it appears in the chart
+        DB::table('bundle_history')->insert([
+            'stock_id' => $id,
+            'date' => $validated['bundle_date'],
+            'sheets_per_bundle' => $validated['sheets_per_bundle'],
+            'bundle_count' => $validated['bundle_count'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        // Store bundle info (could be a new table, for now just pass to view)
+        $bundleInfo = [
+            'date' => $validated['bundle_date'],
+            'sheets_per_bundle' => $validated['sheets_per_bundle'],
+            'bundle_count' => $validated['bundle_count'],
+            'stock' => $stock
+        ];
+        return view('stock-bundle-info', $bundleInfo);
+    }
+    public function bundleChart()
+    {
+        // Fetch all bundle records and join with finished_stocks and orders
+        $bundles = DB::table('bundle_history')
+            ->leftJoin('finished_stocks', 'bundle_history.stock_id', '=', 'finished_stocks.id')
+            ->leftJoin('orders', 'finished_stocks.lot', '=', 'orders.lot')
+            ->select(
+                'bundle_history.*',
+                'finished_stocks.party_name as stock_party_name',
+                'finished_stocks.lot as stock_lot',
+                'orders.cutsheet as stock_cutsheet',
+                'finished_stocks.khana as stock_peice',
+                'finished_stocks.b_width as stock_widht',
+                'finished_stocks.b_length as stock_jalilenght',
+                'orders.dateno as order_date'
+            )
+            ->orderBy('bundle_history.date')
+            ->get();
+        return view('stock-bundle-chart', compact('bundles'));
+    }
+    public function bundleDelete($id)
+    {
+        \DB::table('bundle_history')->where('id', $id)->delete();
+        return redirect()->route('stock.bundle.chart')->with('success', 'Bundle deleted successfully!');
+    }
 }

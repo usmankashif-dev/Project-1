@@ -63,5 +63,9 @@ Route::get('/stock', [MachineController::class, 'stock'])->name('stock');
 Route::delete('/stock/{id}', [MachineController::class, 'stockDelete'])->name('stock.delete');
 Route::get('/stock/{id}/edit', [MachineController::class, 'stockEdit'])->name('stock.edit');
 Route::put('/stock/{id}', [MachineController::class, 'stockUpdate'])->name('stock.update');
+Route::get('/stock/bundle/{id}', [\App\Http\Controllers\MachineController::class, 'bundleForm'])->name('stock.bundle.form');
+Route::post('/stock/bundle/{id}', [\App\Http\Controllers\MachineController::class, 'bundleStore'])->name('stock.bundle.store');
+Route::get('/stock/bundle-chart', [\App\Http\Controllers\MachineController::class, 'bundleChart'])->name('stock.bundle.chart');
+Route::delete('/bundle/{id}', [\App\Http\Controllers\MachineController::class, 'bundleDelete'])->name('bundle.delete');
 
 require __DIR__.'/auth.php';
