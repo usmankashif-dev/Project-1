@@ -25,9 +25,19 @@
 
         <label for="input5">Date:</label>
         <input type="date" name="input5" id="input5" value="{{ old('input5') }}" class="w-full p-2 border rounded">
-<label for="input7" class="block text-sm font-medium text-gray-700">Quantity:</label>
-            <input type="text" name="input7" id="input7" value="{{ old('input7') }}" class="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            
+
+        <div class="mb-4">
+            <label class="block font-semibold mb-1 text-gray-700">Quantity</label>
+            <select name="availableqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" required>
+                <option value="">Select Quantity</option>
+                @php $maxQty = isset($mall) ? $mall->availableqty : 100; @endphp
+                @for ($i = 1; $i <= $maxQty; $i++)
+                    <option value="{{ $i }}" {{ (isset($mall) && $mall->availableqty == $i) ? 'selected' : '' }}>{{ $i }}</option>
+                @endfor
+            </select>
+            <div class="text-xs text-gray-500 mt-1">Available: {{ $maxQty }}</div>
+        </div>
+
         <button type="submit" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
             Update Mall
         </button>

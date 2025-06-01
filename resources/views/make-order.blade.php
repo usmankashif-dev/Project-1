@@ -28,7 +28,7 @@
 
             <div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Peices Of One Sheet:</label>
-                <input type="number" name="orderedpeices" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedpeices" required>
+                <input type="number" name="orderedpeices" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedpeices" min="1" required>
             </div>
 
             <div class="mb-4">

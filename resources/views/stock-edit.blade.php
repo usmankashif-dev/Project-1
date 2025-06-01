@@ -38,7 +38,13 @@
             </div>
             <div class="mb-4">
                 <label for="bundle" class="block text-sm font-medium text-gray-700">Bundle</label>
-                <input type="text" name="bundle" id="bundle" value="{{ old('bundle', $stock->bundle) }}" class="border rounded px-2 py-1 w-full" required />
+                <select name="bundle" id="bundle" class="border rounded px-2 py-1 w-full" required>
+                    <option value="">Select Bundle</option>
+                    @for ($i = 1; $i <= $stock->bundle; $i++)
+                        <option value="{{ $i }}" {{ old('bundle', $stock->bundle) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                    @endfor
+                </select>
+                <div class="text-xs text-gray-500 mt-1">Available: {{ $stock->bundle }}</div>
             </div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
             <a href="{{ route('stock') }}" class="ml-4 text-gray-600 hover:underline">Cancel</a>

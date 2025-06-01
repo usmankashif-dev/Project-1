@@ -33,7 +33,13 @@
 
             <div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Quantity</label>
-                <input type="number" name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedqty" required>
+                <select name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedqty" required>
+                    <option value="">Select Quantity</option>
+                    @for ($i = 1; $i <= $mall->availableqty; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+                <div class="text-xs text-gray-500 mt-1">Available: {{ $mall->availableqty }}</div>
             </div>
 
             <div class="mb-4">

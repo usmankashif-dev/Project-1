@@ -25,7 +25,19 @@
 
             <div class="mb-4">
                 <label class="block font-semibold mb-1 text-gray-700">Quantity</label>
-                <input type="number" name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedqty" required>
+                @if(isset($order) && $order->type === 'm')
+                    <input type="number" name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-gray-100" id="orderedqty" value="{{ $order->orderedqty }}" readonly>
+                    <div class="text-xs text-gray-500 mt-1">Full quantity will be used for M Order.</div>
+                @else
+                    <select name="orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedqty" required>
+                        <option value="">Select Quantity</option>
+                        @php $maxQty = isset($mall) ? $mall->availableqty : ($order->orderedqty ?? 100); @endphp
+                        @for ($i = 1; $i <= $maxQty; $i++)
+                            <option value="{{ $i }}" {{ (isset($order) && $order->orderedqty == $i) ? 'selected' : '' }}>{{ $i }}</option>
+                        @endfor
+                    </select>
+                    <div class="text-xs text-gray-500 mt-1">Available: {{ $maxQty }}</div>
+                @endif
             </div>
 
             <div class="mb-4">

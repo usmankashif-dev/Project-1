@@ -14,7 +14,14 @@
             </div>
             <div class="mb-4">
                 <label for="machineqty" class="block text-sm font-medium text-gray-700">Quantity</label>
-                <input type="number" name="machineqty" id="machineqty" value="{{ old('machineqty', $machine->machineqty) }}" class="border rounded px-2 py-1 w-full" required />
+                <select name="machineqty" id="machineqty" class="border rounded px-2 py-1 w-full" required>
+                    <option value="">Select Quantity</option>
+                    @php $maxQty = $order ? $order->rem + $machine->machineqty : $machine->machineqty; @endphp
+                    @for ($i = 1; $i <= $maxQty; $i++)
+                        <option value="{{ $i }}" {{ old('machineqty', $machine->machineqty) == $i ? 'selected' : '' }}>{{ $i }}</option>
+                    @endfor
+                </select>
+                <div class="text-xs text-gray-500 mt-1">Available to send: {{ $order ? $order->rem + $machine->machineqty : $machine->machineqty }}</div>
             </div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update</button>
             <a href="{{ route('machine-view') }}" class="ml-4 text-gray-600 hover:underline">Cancel</a>
