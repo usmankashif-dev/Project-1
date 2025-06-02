@@ -1,30 +1,77 @@
-<x-app-layout>
-    <div class="max-w-lg mx-auto p-8 bg-white rounded shadow mt-10 print:p-0 print:shadow-none">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-bold mb-2">Billa B</h1>
-            <div class="text-xl font-bold">{{ $stock->khana ?? '-' }}/{{ $order->olenght ?? '-' }}-{{ $order->ogauge ?? '-' }}-{{ $order->bundlewidht ?? '-' }}-{{ $order->lot ?? '-' }}F</div>
-        </div>
-        <div class="mb-4 text-lg font-bold">Cut Size: <span class="font-normal">{{ $order->cutsheet ?? '-' }}</span></div>
-        <div class="mb-4 text-lg font-bold">Code: <span class="font-normal">{{ $order->lot ?? '-' }}</span></div>
-        <div class="mb-6 border-2 border-black rounded p-4 flex flex-col items-center">
-            <div class="text-lg font-bold">Total Sheets = Final Weight</div>
-            <div class="flex gap-8 mt-2">
-                <div class="text-2xl font-bold">{{ $bundle->sheets_per_bundle * $bundle->bundle_count }}</div>
-                <div class="text-2xl font-bold">F</div>
-            </div>
-            <div class="flex gap-8 mt-2">
-                <div class="text-lg font-bold">Sht</div>
-                <div class="text-lg font-bold">F</div>
-            </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4 text-lg font-bold">
-            <div>Date:</div><div>{{ $bundle->date }}</div>
-            <div>Initials:</div><div>__________</div>
-            <div>Machine No:</div><div>{{ $stock->machine_id ?? '-' }}</div>
-            <div>Picked By:</div><div>__________</div>
-        </div>
-        <div class="mt-8 text-center print:hidden">
-            <button onclick="window.print()" class="bg-blue-600 text-white px-6 py-2 rounded font-bold">Print</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  #contentarea {
+    transform: rotate(90deg);
+    transform-origin: center center;
+    max-width: 700px;
+    min-height: unset;
+  }
+</style>
+
+</head>
+<body>
+<div id="contentarea" style="border:6px dashed #a3a3a3; padding:32px; background:#fff;"> 
+  <div id="billa">
+    <h1 style="font-size:70px;text-align:center;font-weight:bold;margin:0;">
+      {{ $stock->khana ?? '' }} &nbsp; {{ $stock->sheet_size ?? '' }}
+    </h1>
+    <div id="cline1" style="height:60px;"></div>
+    <table width="100%" border="0" style="margin-bottom:0;">
+      <tr>
+        <td align="center" valign="top" style="width:33%;padding:0;">
+          <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
+            {{ $bundle->sheets_per_bundle ?? '' }}
+          </h2>
+        </td>
+        <td align="center" valign="top" style="width:33%;padding:0;">
+          <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
+            = {{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}
+          </h2>
+        </td>
+        <td align="center" valign="top" style="width:33%;padding:0;">
+          <h3 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
+            {{ $stock->sheet_size ?? ($order->cutsheet ?? '') }}
+          </h3>
+          <hr style="margin:8px 0;border-top:2px solid #a3a3a3;width:80%;">
+          <div style="font-size:32px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;letter-spacing:1.5px;">
+            {{ $stock->lot ?? ($order->lot ?? '') }}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="bottombilla" style="margin-top:24px;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;">
+      <div style="display:flex;flex-direction:column;align-items:flex-start;">
+        <div style="font-size:28px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;letter-spacing:1.5px;">Date: {{ $bundle->date ?? ($stock->date ?? '') }}</div>
+        <div style="font-size:28px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;letter-spacing:1.5px;">Mch #: {{ $stock->machine_id ?? '' }}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;">
+        <div style="font-size:44px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;line-height:1;letter-spacing:2px;">{{ $stock->party_name ?? ($order->party_name ?? '') }}</div>
+        <div style="font-size:28px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;letter-spacing:1.5px;">Pck By: {{ $stock->packed_by ?? ($bundle->packed_by ?? '') }}</div>
+      </div>
     </div>
-</x-app-layout>
+  </div>
+</div>
+</body>
+</html>
