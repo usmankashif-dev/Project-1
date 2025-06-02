@@ -107,6 +107,7 @@ class MachineController extends Controller
         $validated = $request->validate([
             'finish_date' => 'required|date',
             'finish_qty' => 'required|integer|min:1',
+            'packed_by' => 'required|string|max:255',
         ]);
         $finishQty = $validated['finish_qty'];
         if ($finishQty > $machine->machineqty) {
@@ -124,6 +125,7 @@ class MachineController extends Controller
             'sheet_size' => $machine->cutsheet,
             'lot' => $machine->lot,
             'bundle' => $finishQty,
+            'packed_by' => $validated['packed_by'],
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -246,7 +248,7 @@ class MachineController extends Controller
                 'finished_stocks.khana as stock_peice',
                 'finished_stocks.b_width as stock_widht',
                 'finished_stocks.b_length as stock_jalilenght',
-                'orders.dateno as order_date'
+                'finished_stocks.packed_by as packed_by',
             )
             ->orderBy('bundle_history.date')
             ->get();
@@ -256,5 +258,25 @@ class MachineController extends Controller
     {
         \DB::table('bundle_history')->where('id', $id)->delete();
         return redirect()->route('stock.bundle.chart')->with('success', 'Bundle deleted successfully!');
+    }
+    public function bundleBilla($id, $type)
+    {
+        $bundle = \DB::table('bundle_history')->where('id', $id)->first();
+        $stock = \DB::table('finished_stocks')->where('id', $bundle->stock_id)->first();
+        $order = \DB::table('orders')->where('lot', $stock->lot)->first();
+        // Pass all data and bundle id to the view, but do not display unless needed in the view
+        $data = [
+            'bundle' => $bundle,
+            'stock' => $stock,
+            'order' => $order,
+            'bundle_id' => $id
+        ];
+        if ($type === 'A') {
+            return view('bundle-billa-a', $data);
+        } elseif ($type === 'B') {
+            return view('bundle-billa-b', $data);
+        } else {
+            return view('bundle-billa-c', $data);
+        }
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('sheet_size')->nullable();
             $table->string('lot')->nullable();
             $table->integer('bundle');
+            $table->string('packed_by')->nullable();
             $table->timestamps();
         });
     }

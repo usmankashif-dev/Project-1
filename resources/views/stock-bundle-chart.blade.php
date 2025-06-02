@@ -19,7 +19,7 @@
                         <th class="px-4 py-2 border-b">Sheets/Bundle</th>
                         <th class="px-4 py-2 border-b">Bundle Count</th>
                         <th class="px-4 py-2 border-b">Total Sheets</th>
-                        <th class="px-4 py-2 border-b">Order Date</th>
+                        <th class="px-4 py-2 border-b">Packed By</th>
                         <th class="px-4 py-2 border-b">Actions</th>
                     </tr>
                 </thead>
@@ -37,13 +37,16 @@
                             <td class="px-4 py-2 border-b">{{ $bundle->sheets_per_bundle }}</td>
                             <td class="px-4 py-2 border-b">{{ $bundle->bundle_count }}</td>
                             <td class="px-4 py-2 border-b">{{ $bundle->sheets_per_bundle * $bundle->bundle_count }}</td>
-                            <td class="px-4 py-2 border-b">{{ $bundle->order_date ?? '-' }}</td>
+                            <td class="px-4 py-2 border-b">{{ $bundle->packed_by ?? '-' }}</td>
                             <td class="px-4 py-2 border-b">
                                 <form action="{{ route('bundle.delete', $bundle->id) }}" method="POST" style="display:inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700" onclick="return confirm('Are you sure you want to delete this bundle?')">Delete</button>
                                 </form>
+                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'A']) }}" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 ml-2" target="_blank">Billa A</a>
+                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'B']) }}" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 ml-2" target="_blank">Billa B</a>
+                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'C']) }}" class="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700 ml-2" target="_blank">Billa C</a>
                             </td>
                         </tr>
                     @empty

@@ -67,5 +67,6 @@ Route::get('/stock/bundle/{id}', [\App\Http\Controllers\MachineController::class
 Route::post('/stock/bundle/{id}', [\App\Http\Controllers\MachineController::class, 'bundleStore'])->name('stock.bundle.store');
 Route::get('/stock/bundle-chart', [\App\Http\Controllers\MachineController::class, 'bundleChart'])->name('stock.bundle.chart');
 Route::delete('/bundle/{id}', [\App\Http\Controllers\MachineController::class, 'bundleDelete'])->name('bundle.delete');
+Route::get('/bundle/billa/{id}/{type}', [\App\Http\Controllers\MachineController::class, 'bundleBilla'])->name('bundle.billa');
 
 require __DIR__.'/auth.php';
