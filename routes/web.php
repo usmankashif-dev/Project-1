@@ -68,5 +68,8 @@ Route::post('/stock/bundle/{id}', [\App\Http\Controllers\MachineController::clas
 Route::get('/stock/bundle-chart', [\App\Http\Controllers\MachineController::class, 'bundleChart'])->name('stock.bundle.chart');
 Route::delete('/bundle/{id}', [\App\Http\Controllers\MachineController::class, 'bundleDelete'])->name('bundle.delete');
 Route::get('/bundle/billa/{id}/{type}', [\App\Http\Controllers\MachineController::class, 'bundleBilla'])->name('bundle.billa');
+Route::post('/bundle/verify/{id}', [\App\Http\Controllers\MachineController::class, 'verifyBundle'])->name('bundle.verify');
+Route::get('/verified-bundles', [\App\Http\Controllers\MachineController::class, 'verifiedBundles'])->name('verified.bundles');
+Route::delete('/verified-bundle/{id}', [\App\Http\Controllers\MachineController::class, 'deleteVerifiedBundle'])->name('verified.bundle.delete');
 
 require __DIR__.'/auth.php';

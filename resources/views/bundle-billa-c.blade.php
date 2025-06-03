@@ -7,7 +7,7 @@
 </style>
 </head>
 <body>
-<div id="contentarea" style="max-width:650px; border:6px dashed #a3a3a3; padding:32px; background:#fff; margin:auto; height: 405px;"> 
+<div id="contentarea" style="max-width:650px; border:6px dashed #a3a3a3; padding:0px; background:#fff; margin:auto; height: 425px;"> 
   <div id="billa">
     <h1 style="font-size:70px;text-align:center;font-weight:bolder;margin:0;font-family:'Arial Black',Arial,sans-serif;">
       {{ $stock->khana ?? '' }} &nbsp; {{ $stock->sheet_size ?? '' }}
@@ -17,12 +17,12 @@
       <tr>
         <td align="center" valign="top" style="width:33%;padding:0;">
           <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
-            {{ $bundle->sheets_per_bundle ?? '' }}S
+            {{ $bundle->sheets_per_bundle ?? '' }}<span style="font-size:22px;">ST</span>
           </h2>
         </td>
         <td align="center" valign="top" style="width:33%;padding:0;">
           <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
-            ={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}F
+            ={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}<span style="font-size:22px;">F</span>
           </h2>
         </td>
         <td align="center" valign="top" style="width:33%;padding:0;">

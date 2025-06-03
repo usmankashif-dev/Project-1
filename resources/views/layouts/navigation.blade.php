@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('stock.bundle.chart')" :active="request()->routeIs('stock.bundle.chart')">
                         {{ __('Bundle Chart') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('verified.bundles')" :active="request()->routeIs('verified.bundles')">
+                        {{ __('Verified Bundles') }}
+                    </x-nav-link>
                 </div>
             </div>
 

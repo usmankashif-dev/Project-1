@@ -287,4 +287,42 @@ class MachineController extends Controller
             return view('bundle-billa-c', $data);
         }
     }
+    public function verifyBundle($id)
+    {
+        $bundle = \DB::table('bundle_history')->where('id', $id)->first();
+        if (!$bundle) {
+            return redirect()->back()->with('error', 'Bundle not found!');
+        }
+        $stock = \DB::table('finished_stocks')->where('id', $bundle->stock_id)->first();
+        // Insert into verified_bundles
+        \DB::table('verified_bundles')->insert([
+            'stock_id' => $bundle->stock_id,
+            'date' => $bundle->date,
+            'sheets_per_bundle' => $bundle->sheets_per_bundle,
+            'bundle_count' => $bundle->bundle_count,
+            'packed_by' => $stock->packed_by ?? null,
+            'party_name' => $stock->party_name ?? null,
+            'lot' => $stock->lot ?? null,
+            'cutsheet' => $stock->sheet_size ?? null,
+            'peice' => $stock->khana ?? null,
+            'widht' => $stock->b_width ?? null,
+            'jalilenght' => $stock->jalilenght ?? null,
+            'machine_id' => $stock->machine_id ?? null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        // Remove from bundle_history
+        \DB::table('bundle_history')->where('id', $id)->delete();
+        return redirect()->route('stock.bundle.chart')->with('success', 'Bundle verified and moved!');
+    }
+    public function verifiedBundles()
+    {
+        $bundles = \DB::table('verified_bundles')->orderBy('date', 'desc')->get();
+        return view('verified-bundles', compact('bundles'));
+    }
+    public function deleteVerifiedBundle($id)
+    {
+        \DB::table('verified_bundles')->where('id', $id)->delete();
+        return redirect()->route('verified.bundles')->with('success', 'Verified bundle deleted successfully!');
+    }
 }

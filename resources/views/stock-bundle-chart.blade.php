@@ -44,9 +44,13 @@
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700" onclick="return confirm('Are you sure you want to delete this bundle?')">Delete</button>
                                 </form>
-                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'A']) }}" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 ml-2" target="_blank">Billa A</a>
-                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'B']) }}" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 ml-2" target="_blank">Billa B</a>
-                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'C']) }}" class="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700 ml-2" target="_blank">Billa C</a>
+                                <form action="{{ route('bundle.verify', $bundle->id) }}" method="POST" style="display:inline" onsubmit="return confirm('Are you sure you want to verify this bundle?')">
+                                    @csrf
+                                    <button type="submit" class="bg-green-700 text-white px-3 py-1 rounded hover:bg-green-800 ml-2">Verify</button>
+                                </form>
+                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'A']) }}" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 ml-2" target="_blank" class="m-2">Billa A</a>
+                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'B']) }}" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 ml-2" target="_blank" class="m-2">Billa B</a>
+                                <a href="{{ route('bundle.billa', ['id' => $bundle->id, 'type' => 'C']) }}" class="bg-yellow-600 text-white px-3 py-1 rounded hover:bg-yellow-700 ml-2" target="_blank" class="m-2">Billa C</a>
                             </td>
                         </tr>
                     @empty

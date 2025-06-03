@@ -36,8 +36,11 @@
 
     <!-- Main Numbers Row -->
     <div class="flex justify-around items-center py-6 px-6">
-      <div class="text-4xl font-black p-2">{{ $bundle->sheets_per_bundle ?? '' }}S</div>
-      <div class="text-4xl font-black p-2">={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}F</div>
+      <div class="text-4xl font-black">
+        {{ $bundle->sheets_per_bundle ?? '' }}<span style="font-size:22px;">St</span>
+        <p></p>
+      </div>
+      <div class="text-4xl font-black">={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}<span style="font-size:22px;">F</span></div>
       <div class="text-center">
         <div class="text-4xl font-black">{{ $stock->sheet_size ?? ($order->cutsheet ?? '') }}</div>
         <hr style="margin:8px 0;border-top:2px solid #000000;width:90%;">

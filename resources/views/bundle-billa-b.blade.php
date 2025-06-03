@@ -40,11 +40,11 @@
       <tr>
         <td align="center" valign="top" style="width:33%;padding:0;">
           <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
-            {{ $bundle->sheets_per_bundle ?? '' }}S
+            {{ $bundle->sheets_per_bundle ?? '' }}<span style="font-size:22px;">ST</span>
           </h2>
         </td>
         <td align="center" valign="top" style="width:33%;padding:0;">
-          <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}F
+          <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}<span style="font-size:22px;">F</span>
           </h2>
         </td>
         <td align="center" valign="top" style="width:33%;padding:0;">
