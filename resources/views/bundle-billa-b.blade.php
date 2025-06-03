@@ -30,29 +30,28 @@
 
 </head>
 <body>
-<div id="contentarea" style="border:6px dashed #a3a3a3; padding:32px; background:#fff;"> 
+<div id="contentarea" style="border:6px dashed #a3a3a3; padding:32px; background:#fff; width: 560px; padding: 5px; height: 405px;"> 
   <div id="billa">
     <h1 style="font-size:70px;text-align:center;font-weight:bold;margin:0;">
-      {{ $stock->khana ?? '' }} &nbsp; {{ $stock->sheet_size ?? '' }}
+      {{ $stock->khana ?? '' }}  <span class=""> - {{ $stock->ogauge ?? ($order->ogauge ?? '') }}g-{{ $stock->b_width ?? '' }}-{{ $stock->jalilenght ?? ($order->jalilenght ?? '') }}</span>
     </h1>
-    <div id="cline1" style="height:60px;"></div>
+    <div id="cline1" style="height:30px;"></div>
     <table width="100%" border="0" style="margin-bottom:0;">
       <tr>
         <td align="center" valign="top" style="width:33%;padding:0;">
           <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
-            {{ $bundle->sheets_per_bundle ?? '' }}
+            {{ $bundle->sheets_per_bundle ?? '' }}S
           </h2>
         </td>
         <td align="center" valign="top" style="width:33%;padding:0;">
-          <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
-            = {{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}
+          <h2 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">={{ ($stock->jalilenght ?? ($order->jalilenght ?? 0)) * ($bundle->sheets_per_bundle ?? 0) }}F
           </h2>
         </td>
         <td align="center" valign="top" style="width:33%;padding:0;">
           <h3 style="font-size:40px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;margin:0;letter-spacing:2px;">
             {{ $stock->sheet_size ?? ($order->cutsheet ?? '') }}
           </h3>
-          <hr style="margin:8px 0;border-top:2px solid #a3a3a3;width:80%;">
+          <hr style="margin:8px 0;border-top:2px solid #000000;width:100%;">
           <div style="font-size:32px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;letter-spacing:1.5px;">
             {{ $stock->lot ?? ($order->lot ?? '') }}
           </div>
@@ -60,7 +59,7 @@
       </tr>
     </table>
   </div>
-  <div id="bottombilla" style="margin-top:24px;">
+  <div id="bottombilla">
     <div style="display:flex;align-items:flex-end;justify-content:space-between;">
       <div style="display:flex;flex-direction:column;align-items:flex-start;">
         <div style="font-size:28px;font-family:'Arial Black',Arial,sans-serif;font-weight:900;letter-spacing:1.5px;">Date: {{ $bundle->date ?? ($stock->date ?? '') }}</div>

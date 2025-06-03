@@ -137,6 +137,7 @@ class MachineController extends Controller
             $machine->save();
         }
         return redirect()->route('stock')->with('success', 'Stock finished and saved!');
+        
     }
 
     public function stock(Request $request)
@@ -233,6 +234,13 @@ class MachineController extends Controller
             'stock' => $stock
         ];
         return view('stock-bundle-info', $bundleInfo);
+        $stock = DB::table('finished_stocks')->where('id', $id)->first();
+        if ($stock->bundle <= 0) {
+            $stock->delete();
+        }
+         else {
+            $stock->save();
+         }
     }
     public function bundleChart()
     {
