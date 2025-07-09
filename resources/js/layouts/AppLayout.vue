@@ -15,7 +15,4 @@ withDefaults(defineProps<Props>(), {
     <AppLayout :breadcrumbs="breadcrumbs">
         <slot />
     </AppLayout>
-     <AppLayout :MallView="MallView">
-        <slot />
-    </AppLayout>
 </template>
