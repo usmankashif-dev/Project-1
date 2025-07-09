@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Machine;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class MachineController extends Controller
 {
     public function create($orderId)
     {
         $order = Order::findOrFail($orderId);
-        return view('machine-form', compact('order'));
+        return Inertia::render('MachineForm', [
+            'order' => $order
+        ]);
     }
 
     public function store(Request $request, $orderId)
@@ -54,7 +57,9 @@ class MachineController extends Controller
     public function index()
     {
         $machines = Machine::all();
-        return view('machine-view', compact('machines'));
+        return Inertia::render('MachineView', [
+            'machines' => $machines
+        ]);
     }
     public function destroy($id)
     {
@@ -66,7 +71,10 @@ class MachineController extends Controller
     {
         $machine = Machine::findOrFail($id);
         $order = Order::where('partyorder', $machine->partyorder)->first();
-        return view('machine-edit', compact('machine', 'order'));
+        return Inertia::render('MachineEdit', [
+            'machine' => $machine,
+            'order' => $order
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -98,7 +106,9 @@ class MachineController extends Controller
     public function finishForm($id)
     {
         $machine = Machine::findOrFail($id);
-        return view('machine-finish', compact('machine'));
+        return Inertia::render('MachineFinish', [
+            'machine' => $machine
+        ]);
     }
 
     public function finish(Request $request, $id)
@@ -162,7 +172,9 @@ class MachineController extends Controller
             $query->where('lot', 'like', '%' . $request->lot . '%');
         }
         $stocks = $query->orderByDesc('date')->get();
-        return view('stock', compact('stocks'));
+        return Inertia::render('Stock', [
+            'stocks' => $stocks
+        ]);
     }
     public function stockDelete($id)
     {
@@ -173,7 +185,9 @@ class MachineController extends Controller
     public function stockEdit($id)
     {
         $stock = \DB::table('finished_stocks')->where('id', $id)->first();
-        return view('stock-edit', compact('stock'));
+        return Inertia::render('StockEdit', [
+            'stock' => $stock
+        ]);
     }
 
     public function stockUpdate(Request $request, $id)
@@ -195,7 +209,9 @@ class MachineController extends Controller
     public function bundleForm($id)
     {
         $stock = DB::table('finished_stocks')->where('id', $id)->first();
-        return view('stock-bundle-form', compact('stock'));
+        return Inertia::render('StockBundleForm', [
+            'stock' => $stock
+        ]);
     }
 
     public function bundleStore(Request $request, $id)
@@ -233,7 +249,7 @@ class MachineController extends Controller
             'bundle_count' => $validated['bundle_count'],
             'stock' => $stock
         ];
-        return view('stock-bundle-info', $bundleInfo);
+        return Inertia::render('StockBundleInfo', $bundleInfo);
         $stock = DB::table('finished_stocks')->where('id', $id)->first();
         if ($stock->bundle <= 0) {
             $stock->delete();
@@ -260,7 +276,9 @@ class MachineController extends Controller
             )
             ->orderBy('bundle_history.date')
             ->get();
-        return view('stock-bundle-chart', compact('bundles'));
+        return Inertia::render('StockBundleChart', [
+            'bundles' => $bundles
+        ]);
     }
     public function bundleDelete($id)
     {
@@ -280,11 +298,11 @@ class MachineController extends Controller
             'bundle_id' => $id
         ];
         if ($type === 'A') {
-            return view('bundle-billa-a', $data);
+            return Inertia::render('BundleBillaA', $data);
         } elseif ($type === 'B') {
-            return view('bundle-billa-b', $data);
+            return Inertia::render('BundleBillaB', $data);
         } else {
-            return view('bundle-billa-c', $data);
+            return Inertia::render('BundleBillaC', $data);
         }
     }
     public function verifyBundle($id)
@@ -318,7 +336,9 @@ class MachineController extends Controller
     public function verifiedBundles()
     {
         $bundles = \DB::table('verified_bundles')->orderBy('date', 'desc')->get();
-        return view('verified-bundles', compact('bundles'));
+        return Inertia::render('VerifiedBundles', [
+            'bundles' => $bundles
+        ]);
     }
     public function deleteVerifiedBundle($id)
     {

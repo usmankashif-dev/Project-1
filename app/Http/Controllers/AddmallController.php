@@ -8,15 +8,26 @@ use App\Models\Dropdown;
 use App\Models\Party; 
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 
 class AddmallController extends Controller
 {
     public function showAddMallForm()
     {
         $party = Party::all(); 
-        return view('Add-mall', compact('party'));
+        return
+       Inertia::render('Add-mall', [
+        'party' => $party
+    ]);
     }
     
+public function index()
+{
+    $malls = Mall::all();
+    return Inertia::render('mall-view', [
+        'malls' => $malls
+    ]);
+}
 
 
 public function addmallform(Request $request)
@@ -60,7 +71,9 @@ public function addmallform(Request $request)
     public function editMall($id)
     {
         $mall = Mall::findOrFail($id);
-        return view('edit-mall', compact('mall'));
+        return Inertia::render('Edit-mall', [
+            'mall' => $mall
+        ]);
     }
 
     public function updateMall(Request $request, $id)
@@ -72,22 +85,21 @@ public function addmallform(Request $request)
             'input3' => 'required|numeric|min:0',
             'input4' => 'required|string',
             'input5' => 'required|string',
-            'input7' => 'required|string',
-
+            'availableqty' => 'required|numeric|min:0',
         ]);
         
         $mall = Mall::findOrFail($id);
         $mall->update($validated);
-$mall->availableqty = $request->input7;
-$mall->save();
 
         return redirect()->route('mall-view');
     }
 
     public function showAddMallForm1()
     {
-        $party = DB::table('parties')->get(); 
-        return view('Add-mall', compact('party'));
+        $party = \DB::table('parties')->get(); 
+        return Inertia::render('Add-mall', [
+            'party' => $party
+        ]);
     }
     
 
@@ -98,15 +110,22 @@ $mall->save();
         return response()->json(['id' => $party->id, 'name' => $party->name]);
     }
    
- public function newordersv($id)
-    {
-        $mall = Mall::findOrFail($id);
-        return view('new-order', compact('mall'));
-    }
+public function newordersv($id)
+{
+    $mall = Mall::findOrFail($id);
+    // Use the same view but pass a flag to indicate 'make order' mode (no quantity field)
+    return Inertia::render('new-order', [
+        'mall' => $mall,
+        'make_order_full_quantity' => true // Pass this flag to the Vue component
+    ]);
+}
      public function makenewordersv($id)
     {
         $mall = Mall::findOrFail($id);
-        return view('make-order', compact('mall'));
+        return Inertia::render('new-order', [
+        'mall' => $mall,
+        'make_order_full_quantity' => true // Pass this flag to the Vue component
+    ]);
     }
 
 public function store(Request $request)
@@ -230,9 +249,10 @@ public function makestore(Request $request)
 
     $orderedpeices = $request->orderedpeices;
     $cutsheetqty = 0;
-    
+    if ($orderedpeices && $orderedpeices > 0) {
         $cutsheetqty = $orderedqty * $orderedpeices;
-    $olenght = $mall->input2 / $orderedpeices;
+        $olenght = $mall->input2 / $orderedpeices;
+    }
 
     $order = Order::create([
         'orderedqty' => $orderedqty,
@@ -256,8 +276,6 @@ public function makestore(Request $request)
         'orderedpeices' => $orderedpeices,
     ]);
     Log::info('Order created', ['order_id' => $order->id]);
-    $mall_id = $request->mall_id;
-    $mall = Mall::find($mall_id);
     $mall->delete();
 
     return redirect()->route('order-view')->with('success', 'Order placed successfully!');
@@ -271,7 +289,7 @@ public function makestore(Request $request)
 
 public function newOrder()
 {
-    return view('new-order');
+    return Inertia::render('new-order');
 }
 
 public function showOrders()
@@ -283,12 +301,16 @@ public function showOrders()
             $order->rem = $order->mall->availableqty;
         }
     }
-    return view('order-view', compact('orders'));
+    return Inertia::render('order-view', [
+        'orders' => $orders
+    ]);
 }
 public function editOrder($id)
     {
         $order = Order::findOrFail($id);
-        return view('edit-order', compact('order'));
+        return Inertia::render('Edit-order', [
+            'order' => $order
+        ]);
     }
         public function updateorder(Request $request, $id)
     {
@@ -309,5 +331,15 @@ public function editOrder($id)
 $order->save();
 
         return redirect()->route('order-view');
+    }
+
+    // Show Make Order page (full quantity, no quantity field)
+    public function showMakeOrder($id)
+    {
+        $mall = Mall::findOrFail($id);
+        return Inertia::render('make-order', [
+            'mall' => $mall,
+            'make_order_full_quantity' => true
+        ]);
     }
 }

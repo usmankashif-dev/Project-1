@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mall;
 use App\Models\Party;
+use Inertia\Inertia;
 
 class MallController extends Controller
 {
@@ -35,7 +36,7 @@ class MallController extends Controller
             $query->where('input5', 'like', '%' . $request->input5 . '%');
         }
     
-     if ($request->filled('input7')) {
+        if ($request->filled('input7')) {
             $query->where('input7', 'like', '%' . $request->input7 . '%');
         }
         if ($request->filled('lot')) {
@@ -44,7 +45,10 @@ class MallController extends Controller
     
         $malls = $query->get();
         $parties = Party::all();
-        return view('mall-view', compact('malls', 'parties'));
+        return Inertia::render('MallView', [
+            'malls' => $malls,
+            'parties' => $parties
+        ]);
     }
     public function indexd(Request $request)
     {
@@ -74,7 +78,7 @@ class MallController extends Controller
             $query->where('input5', 'like', '%' . $request->input5 . '%');
         }
 
-     if ($request->filled('input7')) {
+        if ($request->filled('input7')) {
             $query->where('input7', 'like', '%' . $request->input7 . '%');
         }
         if ($request->filled('lot')) {
@@ -83,7 +87,25 @@ class MallController extends Controller
 
         $malls = $query->get();
     
-        return view('dashboard', compact('malls'));
+        return Inertia::render('Dashboard', [
+            'malls' => $malls
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $mall = Mall::findOrFail($id);
+
+        $mall->party = $request->input('party');
+        $mall->input1 = $request->input('input1');
+        $mall->input2 = $request->input('input2');
+        $mall->input3 = $request->input('input3');
+        $mall->input4 = $request->input('input4');
+        $mall->input5 = $request->input('input5');
+        $mall->availableqty = $request->input('availableqty');
+        $mall->save();
+
+        return redirect()->back()->with('success', 'Mall updated!');
     }
     
 }

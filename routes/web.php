@@ -7,13 +7,21 @@ use App\Http\Controllers\PartyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\MachineController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
-    return view('welcome');
+    return Inertia::render('Welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return Inertia::render('Dashboard');
+});
+Route::get('/home', function () {
+    return Inertia::render('Home'); 
+})->name('home');
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -72,4 +80,8 @@ Route::post('/bundle/verify/{id}', [\App\Http\Controllers\MachineController::cla
 Route::get('/verified-bundles', [\App\Http\Controllers\MachineController::class, 'verifiedBundles'])->name('verified.bundles');
 Route::delete('/verified-bundle/{id}', [\App\Http\Controllers\MachineController::class, 'deleteVerifiedBundle'])->name('verified.bundle.delete');
 
+// Add Make Order route (GET)
+Route::get('/make-order/{id}', [AddmallController::class, 'showMakeOrder'])->name('makeorder.show');
+
 require __DIR__.'/auth.php';
+require __DIR__.'/settings.php';
