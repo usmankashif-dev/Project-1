@@ -17,9 +17,19 @@ withDefaults(defineProps<Props>(), {
 <template>
     <AppShell variant="sidebar">
         <AppSidebar />
-        <AppContent variant="sidebar" class="overflow-x-hidden">
+        <AppContent variant="sidebar" class="overflow-x-hidden bg-background text-foreground">
             <AppSidebarHeader :breadcrumbs="breadcrumbs" />
             <slot />
         </AppContent>
     </AppShell>
 </template>
+
+<style scoped>
+/* Ensure all backgrounds and text colors use CSS variables for dark mode */
+.bg-background {
+  background-color: var(--background) !important;
+}
+.text-foreground {
+  color: var(--foreground) !important;
+}
+</style>

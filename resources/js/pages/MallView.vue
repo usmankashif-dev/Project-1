@@ -1,23 +1,22 @@
 <template>
- <AppLayout>
-  <div>
+  <div class="bg-background text-foreground min-h-screen">
     <div class="w-full p-4">
-      <form @submit.prevent="searchMall" class="p-4 bg-white shadow rounded-md mb-4 flex flex-wrap gap-4 items-center">
-        <input v-model="filters.party" type="text" name="party" placeholder="Party" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.input1" type="text" name="input1" placeholder="Gauge" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.input2" type="text" name="input2" placeholder="Length" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.input3" type="text" name="input3" placeholder="Width" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.input4" type="text" name="input4" placeholder="Material" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.input5" type="text" name="input5" placeholder="Date" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.input7" type="number" name="input7" placeholder="Quantity" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400">
-        <input v-model="filters.lot" type="text" name="lot" placeholder="Lot" class="w-full sm:w-40 h-10 p-2 border border-blue-400 rounded-lg bg-gray-50 text-blue-900 font-semibold tracking-wide">
-        <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-bold shadow">Search</button>
+      <form @submit.prevent="searchMall" class="p-4 bg-background shadow rounded-md mb-4 flex flex-wrap gap-4 items-center">
+        <input v-model="filters.party" type="text" name="party" placeholder="Party" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.input1" type="text" name="input1" placeholder="Gauge" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.input2" type="text" name="input2" placeholder="Length" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.input3" type="text" name="input3" placeholder="Width" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.input4" type="text" name="input4" placeholder="Material" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.input5" type="text" name="input5" placeholder="Date" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.input7" type="number" name="input7" placeholder="Quantity" class="w-full sm:w-40 h-10 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 bg-background text-foreground">
+        <input v-model="filters.lot" type="text" name="lot" placeholder="Lot" class="w-full sm:w-40 h-10 p-2 border border-blue-400 rounded-lg bg-background text-foreground font-semibold tracking-wide">
+        <button type="submit" class="w-full sm:w-auto px-6 py-2 bg-blue-500 text-white dark:bg-blue-400 dark:text-black rounded-lg hover:bg-blue-600 dark:hover:bg-blue-300 transition font-bold shadow">Search</button>
       </form>
-      <form @submit.prevent="submitNewStock" class="fw mx-auto p-6 bg-white shadow-lg rounded-md animate-fade-in space-y-6" v-show="showForm">
+      <form @submit.prevent="submitNewStock" class="fw mx-auto p-6 bg-background shadow-lg rounded-md animate-fade-in space-y-6" v-show="showForm">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div>
       <label for="party">Select Party:</label>
-      <select v-model="newStockForm.party" @change="handlePartyChange" class="w-full">
+      <select v-model="newStockForm.party" @change="handlePartyChange" class="w-full bg-background text-foreground">
         <option value="">--Select Party--</option>
         <option v-for="party in parties" :key="party.name" :value="party.name">{{ party.name }}</option>
         <option value="add_new">+ Add New Party</option>
@@ -25,31 +24,30 @@
     </div>
 
     <div v-show="showAddPartyInput" class="md:col-span-2">
-      <input v-model="newPartyName" placeholder="Enter new party" class="w-full sm:w-40 h-8 p-2 border rounded-md" />
-      <button type="button" @click="addParty" class="mt-2 w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Add</button>
+      <input v-model="newPartyName" placeholder="Enter new party" class="w-full sm:w-40 h-8 p-2 border rounded-md bg-background text-foreground" />
+      <button type="button" @click="addParty" class="mt-2 w-full px-4 py-2 bg-blue-500 text-white dark:bg-blue-400 dark:text-black rounded-md hover:bg-blue-600 dark:hover:bg-blue-300">Add</button>
     </div>
 
-    <div><label>Gauge:</label><input v-model="newStockForm.input1" type="number" step="0.01" class="w-full" required></div>
-    <div><label>Length:</label><input v-model="newStockForm.input2" type="number" step="0.01" class="w-full" required></div>
-    <div><label>Width:</label><input v-model="newStockForm.input3" type="number" step="0.01" class="w-full" required></div>
-    <div><label>Material:</label><input v-model="newStockForm.input4" type="text" class="w-full"></div>
-    <div><label>Date:</label><input v-model="newStockForm.input5" type="date" class="w-full"></div>
-    <div><label>Lot:</label><input v-model="newStockForm.lot" type="text" readonly class="w-full bg-gray-50"></div>
-    <div><label>Quantity:</label><input v-model="newStockForm.input7" type="text" class="w-full"></div>
+    <div><label>Gauge:</label><input v-model="newStockForm.input1" type="number" step="0.01" class="w-full bg-background text-foreground" required></div>
+    <div><label>Length:</label><input v-model="newStockForm.input2" type="number" step="0.01" class="w-full bg-background text-foreground" required></div>
+    <div><label>Width:</label><input v-model="newStockForm.input3" type="number" step="0.01" class="w-full bg-background text-foreground" required></div>
+    <div><label>Material:</label><input v-model="newStockForm.input4" type="text" class="w-full bg-background text-foreground"></div>
+    <div><label>Date:</label><input v-model="newStockForm.input5" type="date" class="w-full bg-background text-foreground"></div>
+    <div><label>Lot:</label><input v-model="newStockForm.lot" type="text" readonly class="w-full bg-background text-foreground"></div>
+    <div><label>Quantity:</label><input v-model="newStockForm.input7" type="text" class="w-full bg-background text-foreground"></div>
 
     <div class="md:col-span-2">
-      <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">Add New Stock</button>
+      <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white dark:bg-green-400 dark:text-black rounded-md hover:bg-green-600 dark:hover:bg-green-300">Add New Stock</button>
     </div>
   </div>
 </form>
 
       <div class="flex center">
-        <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition" @click="showForm = !showForm">Add New Stock</button>
-       
+        <button type="submit" class="w-full px-4 py-2 bg-green-500 text-white dark:bg-green-400 dark:text-black rounded-md hover:bg-green-600 dark:hover:bg-green-300 transition" @click="showForm = !showForm">Add New Stock</button>
       </div>
       <div class="overflow-x-auto">
-        <table class="min-w-full table-auto border border-gray-300 shadow-md rounded-lg animate-fade-in">
-          <thead class="bg-gray-100">
+        <table class="min-w-full table-auto border border-gray-300 shadow-md rounded-lg animate-fade-in bg-background text-foreground">
+          <thead class="bg-background text-foreground">
             <tr>
               <th class="px-4 py-2 text-left chart">Date</th>
               <th class="px-4 py-2 text-left chart">Party</th>
@@ -63,7 +61,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="mall in malls" :key="mall.id" class="hover:bg-gray-50 transition">
+            <tr v-for="mall in malls" :key="mall.id" class="hover:bg-background transition">
               <td class="px-4 py-2 chart">{{ mall.input5 }}</td>
               <td class="px-4 py-2 chart">{{ mall.party }}</td>
               <td class="px-4 py-2 chart">{{ mall.input3 }}</td>
@@ -75,23 +73,22 @@
               <td class="px-4 py-2 chart">
                 <div class="flex flex-col sm:flex-row justify-center items-center gap-2">
                   <form @submit.prevent="deleteMall(mall.id)" class="inline-block">
-                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md transition">Delete</button>
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white dark:bg-red-400 dark:text-black px-4 py-2 rounded-md transition">Delete</button>
                   </form>
-                  <a :href="route('mall.edit', mall.id)" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">Edit</a>
-                  <a :href="route('order.create', mall.id)" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">C Order</a>
-                  <a :href="route('makeorder.show', mall.id)" class="bg-cyan-500 hover:bg-cyan-600 text-white px-4 py-2 rounded-md transition textr">M Order</a>
+                  <a :href="route('mall.edit', mall.id)" class="bg-cyan-500 hover:bg-cyan-600 text-white dark:bg-cyan-400 dark:text-black px-4 py-2 rounded-md transition textr">Edit</a>
+                  <a :href="route('order.create', mall.id)" class="bg-cyan-500 hover:bg-cyan-600 text-white dark:bg-cyan-400 dark:text-black px-4 py-2 rounded-md transition textr">C Order</a>
+                  <a :href="route('makeorder.show', mall.id)" class="bg-cyan-500 hover:bg-cyan-600 text-white dark:bg-cyan-400 dark:text-black px-4 py-2 rounded-md transition textr">M Order</a>
                 </div>
               </td>
             </tr>
             <tr v-if="malls.length === 0">
-              <td colspan="15" class="px-4 py-4 text-center text-gray-500">No stocks found.</td>
+              <td colspan="15" class="px-4 py-4 text-center text-foreground">No stocks found.</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-   </AppLayout>
 </template>
 
 <script setup>
@@ -99,6 +96,9 @@ import { defineProps, ref, reactive } from 'vue' // ✅ correct
 import { router } from '@inertiajs/vue3';
 import AppLayout from '@/layouts/AppLayout.vue'
 
+defineOptions({
+  layout: AppLayout
+})
 
 const showForm = ref(false)
 

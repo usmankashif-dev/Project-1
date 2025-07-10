@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="mb-6 p-4 bg-gray-100 border-l-4 border-blue-500 rounded shadow">
-      <h2 class="text-xl font-semibold text-blue-800 mb-2">Mall Information</h2>
+    <div class="mb-6 p-4 bg-background border-l-4 border-blue-500 rounded shadow text-foreground">
+      <h2 class="text-xl font-semibold text-blue-800 dark:text-blue-300 mb-2">Mall Information</h2>
       <p><strong>Party:</strong> {{ mall.party }}</p>
       <p><strong>Gauge:</strong> {{ mall.input1 }}</p>
       <p><strong>Length:</strong> {{ mall.input2 }}</p>
@@ -9,42 +9,42 @@
       <p><strong>Lot:</strong> {{ mall.lot }}</p>
       <p><strong>Quantity:</strong> {{ mall.availableqty }}</p>
     </div>
-    <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow mt-10">
+    <div class="max-w-2xl mx-auto p-6 bg-background text-foreground rounded-xl shadow mt-10">
       <form @submit.prevent="submitForm">
         <div class="flex justify-center">
-          <h1 class="text-xl">Make New Order</h1>
+          <h1 class="text-xl text-foreground">Make New Order</h1>
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Gauge</label>
-          <input type="text" v-model="form.ogauge" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="ogauge" required />
+          <label class="block font-semibold mb-1 text-foreground">Gauge</label>
+          <input type="text" v-model="form.ogauge" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="ogauge" required />
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Piece</label>
-          <input type="text" v-model="form.peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="peice" required />
+          <label class="block font-semibold mb-1 text-foreground">Piece</label>
+          <input type="text" v-model="form.peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="peice" required />
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Peices Of One Sheet:</label>
-          <input type="number" v-model.number="form.orderedpeices" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="orderedpeices" min="1" required />
+          <label class="block font-semibold mb-1 text-foreground">Peices Of One Sheet:</label>
+          <input type="number" v-model.number="form.orderedpeices" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="orderedpeices" min="1" required />
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Date:</label>
-          <input type="date" v-model="form.dateno" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="dateno" required />
+          <label class="block font-semibold mb-1 text-foreground">Date:</label>
+          <input type="date" v-model="form.dateno" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="dateno" required />
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Widht:</label>
-          <input type="number" v-model.number="form.bundlewidht" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="bundlewidht" required />
+          <label class="block font-semibold mb-1 text-foreground">Widht:</label>
+          <input type="number" v-model.number="form.bundlewidht" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="bundlewidht" required />
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Sheets Per Bundle:</label>
-          <input type="number" v-model.number="form.sheetperbundle" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="sheetperbundle" required />
+          <label class="block font-semibold mb-1 text-foreground">Sheets Per Bundle:</label>
+          <input type="number" v-model.number="form.sheetperbundle" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="sheetperbundle" required />
         </div>
         <div class="mb-4">
-          <label class="block font-semibold mb-1 text-gray-700">Jali Lenght:</label>
-          <input type="number" v-model.number="form.jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="jalilenght" required />
+          <label class="block font-semibold mb-1 text-foreground">Jali Lenght:</label>
+          <input type="number" v-model.number="form.jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="jalilenght" required />
         </div>
         <input type="hidden" :value="mall.id" name="mall_id" />
         <div class="mt-6">
-          <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+          <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 dark:bg-blue-400 dark:hover:bg-blue-600 dark:text-black">
             Submit
           </button>
         </div>

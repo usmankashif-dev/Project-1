@@ -1,54 +1,54 @@
 <template>
-  <div class="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow mt-10">
+  <div class="max-w-2xl mx-auto p-6 bg-background text-foreground rounded-xl shadow mt-10">
     <form @submit.prevent="submitForm">
       <div class="flex justify-center">
-        <h1 class="text-xl">Edit Order</h1>
+        <h1 class="text-xl text-foreground">Edit Order</h1>
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Gauge</label>
-        <input type="text" v-model="form.ogauge" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="ogauge" required />
+        <label class="block font-semibold mb-1 text-foreground">Gauge</label>
+        <input type="text" v-model="form.ogauge" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="ogauge" required />
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Piece</label>
-        <input type="text" v-model="form.peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="peice" required />
+        <label class="block font-semibold mb-1 text-foreground">Piece</label>
+        <input type="text" v-model="form.peice" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="peice" required />
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Lenght:</label>
-        <input type="number" v-model.number="form.olenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="olenght" required />
+        <label class="block font-semibold mb-1 text-foreground">Lenght:</label>
+        <input type="number" v-model.number="form.olenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="olenght" required />
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Quantity</label>
+        <label class="block font-semibold mb-1 text-foreground">Quantity</label>
         <template v-if="order.type === 'm'">
-          <input type="number" v-model.number="form.orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-gray-100" id="orderedqty" readonly />
-          <div class="text-xs text-gray-500 mt-1">Full quantity will be used for M Order.</div>
+          <input type="number" v-model.number="form.orderedqty" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="orderedqty" readonly />
+          <div class="text-xs text-foreground mt-1">Full quantity will be used for M Order.</div>
         </template>
         <template v-else>
           <input
             type="number"
             v-model.number="form.orderedqty"
-            class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400"
+            class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground"
             id="orderedqty"
             min="1"
             required
           />
-          <div class="text-xs text-gray-500 mt-1">Available: {{ maxQty }}</div>
+          <div class="text-xs text-foreground mt-1">Available: {{ maxQty }}</div>
         </template>
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Date:</label>
-        <input type="date" v-model="form.dateno" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="dateno" required />
+        <label class="block font-semibold mb-1 text-foreground">Date:</label>
+        <input type="date" v-model="form.dateno" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="dateno" required />
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Widht:</label>
-        <input type="number" v-model.number="form.bundlewidht" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="bundlewidht" required />
+        <label class="block font-semibold mb-1 text-foreground">Widht:</label>
+        <input type="number" v-model.number="form.bundlewidht" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="bundlewidht" required />
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Sheets Per Bundle:</label>
-        <input type="number" v-model.number="form.sheetperbundle" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="sheetperbundle" required />
+        <label class="block font-semibold mb-1 text-foreground">Sheets Per Bundle:</label>
+        <input type="number" v-model.number="form.sheetperbundle" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="sheetperbundle" required />
       </div>
       <div class="mb-4">
-        <label class="block font-semibold mb-1 text-gray-700">Jali Lenght:</label>
-        <input type="number" v-model.number="form.jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400" id="jalilenght" required />
+        <label class="block font-semibold mb-1 text-foreground">Jali Lenght:</label>
+        <input type="number" v-model.number="form.jalilenght" class="w-full border px-4 py-2 rounded focus:ring focus:ring-blue-400 bg-background text-foreground" id="jalilenght" required />
       </div>
       <input type="hidden" :value="order.id" name="mall_id" />
       <div class="mt-6">
@@ -89,6 +89,12 @@ function submitForm() {
 </script>
 
 <style scoped>
+.bg-background, .bg-background * {
+  background-color: var(--background) !important;
+}
+.text-foreground, .text-foreground * {
+  color: var(--foreground) !important;
+}
 @media print {
   .max-w-2xl {
     max-width: 100vw !important;

@@ -292,9 +292,55 @@ public function newOrder()
     return Inertia::render('new-order');
 }
 
-public function showOrders()
+public function showOrders(Request $request)
 {
-    $orders = Order::with('mall')->latest()->get(); 
+    $query = Order::with('mall')->latest();
+
+    // Apply filters if present
+    if ($request->filled('from_date')) {
+        $query->whereDate('dateno', '>=', $request->from_date);
+    }
+    if ($request->filled('to_date')) {
+        $query->whereDate('dateno', '<=', $request->to_date);
+    }
+    if ($request->filled('partyorder')) {
+        $query->where('partyorder', 'like', '%' . $request->partyorder . '%');
+    }
+    if ($request->filled('lot')) {
+        $query->where('lot', 'like', '%' . $request->lot . '%');
+    }
+    if ($request->filled('orgsheet')) {
+        $query->where('orgsheet', 'like', '%' . $request->orgsheet . '%');
+    }
+    if ($request->filled('cutsheet')) {
+        $query->where('cutsheet', 'like', '%' . $request->cutsheet . '%');
+    }
+    if ($request->filled('peice')) {
+        $query->where('peice', 'like', '%' . $request->peice . '%');
+    }
+    if ($request->filled('ogauge')) {
+        $query->where('ogauge', 'like', '%' . $request->ogauge . '%');
+    }
+    if ($request->filled('widht')) {
+        $query->where('widht', 'like', '%' . $request->widht . '%');
+    }
+    if ($request->filled('jalilenght')) {
+        $query->where('jalilenght', 'like', '%' . $request->jalilenght . '%');
+    }
+    if ($request->filled('sheetperbundle')) {
+        $query->where('sheetperbundle', 'like', '%' . $request->sheetperbundle . '%');
+    }
+    if ($request->filled('orderedqty')) {
+        $query->where('orderedqty', $request->orderedqty);
+    }
+    if ($request->filled('cutsheetqty')) {
+        $query->where('cutsheetqty', $request->cutsheetqty);
+    }
+    if ($request->filled('rem')) {
+        $query->where('rem', $request->rem);
+    }
+
+    $orders = $query->get();
     // Update each order's rem to the latest availableqty from the related mall
     foreach ($orders as $order) {
         if ($order->mall) {

@@ -54,9 +54,49 @@ class MachineController extends Controller
         return redirect()->route('machine-view')->with('success', 'Sent to machine successfully!');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $machines = Machine::all();
+        $query = Machine::query();
+        if ($request->filled('machinedate')) {
+            $query->whereDate('machinedate', $request->machinedate);
+        }
+        if ($request->filled('machinenumber')) {
+            $query->where('machinenumber', 'like', '%' . $request->machinenumber . '%');
+        }
+        if ($request->filled('machineqty')) {
+            $query->where('machineqty', $request->machineqty);
+        }
+        if ($request->filled('olenght')) {
+            $query->where('olenght', 'like', '%' . $request->olenght . '%');
+        }
+        if ($request->filled('peice')) {
+            $query->where('peice', 'like', '%' . $request->peice . '%');
+        }
+        if ($request->filled('ogauge')) {
+            $query->where('ogauge', 'like', '%' . $request->ogauge . '%');
+        }
+        if ($request->filled('cutsheet')) {
+            $query->where('cutsheet', 'like', '%' . $request->cutsheet . '%');
+        }
+        if ($request->filled('lot')) {
+            $query->where('lot', 'like', '%' . $request->lot . '%');
+        }
+        if ($request->filled('bundlewidht')) {
+            $query->where('bundlewidht', 'like', '%' . $request->bundlewidht . '%');
+        }
+        if ($request->filled('sheetperbundle')) {
+            $query->where('sheetperbundle', 'like', '%' . $request->sheetperbundle . '%');
+        }
+        if ($request->filled('partyorder')) {
+            $query->where('partyorder', 'like', '%' . $request->partyorder . '%');
+        }
+        if ($request->filled('jalilenght')) {
+            $query->where('jalilenght', 'like', '%' . $request->jalilenght . '%');
+        }
+        if ($request->filled('orderedpeices')) {
+            $query->where('orderedpeices', 'like', '%' . $request->orderedpeices . '%');
+        }
+        $machines = $query->latest()->get();
         return Inertia::render('MachineView', [
             'machines' => $machines
         ]);
@@ -258,10 +298,9 @@ class MachineController extends Controller
             $stock->save();
          }
     }
-    public function bundleChart()
+    public function bundleChart(Request $request)
     {
-        // Fetch all bundle records and join with finished_stocks and orders
-        $bundles = DB::table('bundle_history')
+        $query = \DB::table('bundle_history')
             ->leftJoin('finished_stocks', 'bundle_history.stock_id', '=', 'finished_stocks.id')
             ->leftJoin('orders', 'finished_stocks.lot', '=', 'orders.lot')
             ->select(
@@ -273,9 +312,35 @@ class MachineController extends Controller
                 'finished_stocks.b_width as stock_widht',
                 'finished_stocks.b_length as stock_jalilenght',
                 'finished_stocks.packed_by as packed_by',
-            )
-            ->orderBy('bundle_history.date')
-            ->get();
+            );
+        if ($request->filled('stock_party_name')) {
+            $query->where('finished_stocks.party_name', 'like', '%' . $request->stock_party_name . '%');
+        }
+        if ($request->filled('stock_lot')) {
+            $query->where('finished_stocks.lot', 'like', '%' . $request->stock_lot . '%');
+        }
+        if ($request->filled('stock_cutsheet')) {
+            $query->where('orders.cutsheet', 'like', '%' . $request->stock_cutsheet . '%');
+        }
+        if ($request->filled('stock_peice')) {
+            $query->where('finished_stocks.khana', 'like', '%' . $request->stock_peice . '%');
+        }
+        if ($request->filled('stock_widht')) {
+            $query->where('finished_stocks.b_width', 'like', '%' . $request->stock_widht . '%');
+        }
+        if ($request->filled('stock_jalilenght')) {
+            $query->where('finished_stocks.b_length', 'like', '%' . $request->stock_jalilenght . '%');
+        }
+        if ($request->filled('date')) {
+            $query->where('bundle_history.date', $request->date);
+        }
+        if ($request->filled('sheets_per_bundle')) {
+            $query->where('bundle_history.sheets_per_bundle', $request->sheets_per_bundle);
+        }
+        if ($request->filled('bundle_count')) {
+            $query->where('bundle_history.bundle_count', $request->bundle_count);
+        }
+        $bundles = $query->orderBy('bundle_history.date')->get();
         return Inertia::render('StockBundleChart', [
             'bundles' => $bundles
         ]);
@@ -333,9 +398,40 @@ class MachineController extends Controller
         \DB::table('bundle_history')->where('id', $id)->delete();
         return redirect()->route('stock.bundle.chart')->with('success', 'Bundle verified and moved!');
     }
-    public function verifiedBundles()
+    public function verifiedBundles(Request $request)
     {
-        $bundles = \DB::table('verified_bundles')->orderBy('date', 'desc')->get();
+        $query = \DB::table('verified_bundles');
+        if ($request->filled('party_name')) {
+            $query->where('party_name', 'like', '%' . $request->party_name . '%');
+        }
+        if ($request->filled('lot')) {
+            $query->where('lot', 'like', '%' . $request->lot . '%');
+        }
+        if ($request->filled('cutsheet')) {
+            $query->where('cutsheet', 'like', '%' . $request->cutsheet . '%');
+        }
+        if ($request->filled('peice')) {
+            $query->where('peice', 'like', '%' . $request->peice . '%');
+        }
+        if ($request->filled('widht')) {
+            $query->where('widht', 'like', '%' . $request->widht . '%');
+        }
+        if ($request->filled('jalilenght')) {
+            $query->where('jalilenght', 'like', '%' . $request->jalilenght . '%');
+        }
+        if ($request->filled('date')) {
+            $query->where('date', $request->date);
+        }
+        if ($request->filled('sheets_per_bundle')) {
+            $query->where('sheets_per_bundle', $request->sheets_per_bundle);
+        }
+        if ($request->filled('bundle_count')) {
+            $query->where('bundle_count', $request->bundle_count);
+        }
+        if ($request->filled('packed_by')) {
+            $query->where('packed_by', 'like', '%' . $request->packed_by . '%');
+        }
+        $bundles = $query->orderBy('date', 'desc')->get();
         return Inertia::render('VerifiedBundles', [
             'bundles' => $bundles
         ]);
